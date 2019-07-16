@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>What are JavaScript linters?</title>
+    <meta name="description" content>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400">
+
+    <link rel="canonical" href="http://localhost:8080what-are-javascript-linters/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:8080what-are-javascript-linters/amp/">
+    
+    <meta property="og:site_name" content="JavaScript Code Readability">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="What are JavaScript linters?">
+    <meta property="og:description" content="Code linting is a way to increase code quality. Linters like JSLint or JSHint can detect potential bugs, as well as code that is difficult to maintain. Since linters are automated tools running them doesn&#x27;t require manual work once they&#x27;ve been set up. JSLint Example Let&#x27;s run this code through">
+    <meta property="og:url" content="http://localhost:8080what-are-javascript-linters/">
+    <meta property="article:published_time" content="2015-11-01T12:33:41.000Z">
+    <meta property="article:modified_time" content="2015-11-02T23:51:07.000Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="What are JavaScript linters?">
+    <meta name="twitter:description" content="Code linting is a way to increase code quality. Linters like JSLint or JSHint can detect potential bugs, as well as code that is difficult to maintain. Since linters are automated tools running them doesn&#x27;t require manual work once they&#x27;ve been set up. JSLint Example Let&#x27;s run this code through">
+    <meta name="twitter:url" content="http://localhost:8080what-are-javascript-linters/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Matt Zeunert">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "JavaScript Code Readability",
+        "logo": "http://localhost:8080ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Matt Zeunert",
+        "url": "http://localhost:8080author/matt/",
+        "sameAs": [
+            "https://twitter.com/mattzeunert"
+        ]
+    },
+    "headline": "What are JavaScript linters?",
+    "url": "http://localhost:8080what-are-javascript-linters/",
+    "datePublished": "2015-11-01T12:33:41.000Z",
+    "dateModified": "2015-11-02T23:51:07.000Z",
+    "description": "Code linting is a way to increase code quality. Linters like JSLint or JSHint can detect potential bugs, as well as code that is difficult to maintain. Since linters are automated tools running them doesn&#x27;t require manual work once they&#x27;ve been set up. JSLint Example Let&#x27;s run this code through",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.codereadability.com"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="JavaScript Code Readability" href="http://localhost:8080rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="../">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="../rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<style>
+.pull-quote {
+  float: right;
+  font-size: 28px;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  line-height: 1.2em;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  color: white;
+  background: #3A4145;
+  padding: 20px;
+  text-align: center;
+}
+.pull-quote:before {
+  content: "\201C";
+}
+.pull-quote:after {
+  content: "\201D";
+}
+
+@media only screen and (max-width: 900px) {
+  .pull-quote {
+    width: 100%;
+    max-width: none;
+    font-size: 24px;
+  }
+}
+</style>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">What are JavaScript linters?</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-11-01">01 November 2015</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>Code linting is a way to increase code quality.</p>
+
+<p>Linters like <a href="http://www.jslint.com/">JSLint</a> or <a href="http://jshint.com/">JSHint</a> can detect potential bugs, as well as code that is difficult to maintain.</p>
+
+<p>Since linters are automated tools running them doesn't require manual work once they've been set up.</p>
+
+<h2 id="jslintexample">JSLint Example</h2>
+
+<p>Let's run this code through JSLint and see what problems it can detect.</p>
+
+<pre><code>function sayHello(name){
+    alert("Hello " + name);
+}
+
+name = "Douglas Crockford";
+sayHello(name)
+</code></pre>
+
+<p>JSLint analyzes the code and reports a list of potential code quality concerns.</p>
+
+<blockquote>
+  <p>1) Expected one space between ')' and '{'. <br>
+  <code>function sayHello(name){</code></p>
+  
+  <p>2) Expected 'use strict' before 'alert'. <br>
+  <code>alert("Hello " + name);</code>  </p>
+  
+  <p>3) Undeclared 'name'. <br>
+  <code>name = "Douglas Crockford";</code>  </p>
+  
+  <p>4) Undeclared 'name'. <br>
+  <code>sayHello(name)</code>  </p>
+  
+  <p>5) Expected ';' and instead saw '(end)'. <br>
+  <code>sayHello(name)</code></p>
+</blockquote>
+
+<p>We'll go through the list and see what each warning means.</p>
+
+<h3 id="expectedonespacebetweenand">Expected one space between ')' and '{'</h3>
+
+<p>The first warning is a simple <a href="http://www.codereadability.com/why-use-a-style-guide/">code style</a> issue. JSLint expects a space after a function declaration's argument list. Like this:</p>
+
+<pre><code>function sayHello(name) { ... }
+</code></pre>
+
+<p>This isn't a serious issue at all and even JSLint's author Douglas Crockford points out that <a href="http://www.jslint.com/help.html">"JSLint will hurt your feelings"</a>.</p>
+
+<p>JSHint is a much more lenient alternative to JSLint and won't complain about stylistic decisions. </p>
+
+<h3 id="expectedusestrictbeforealert">Expected 'use strict' before 'alert'.</h3>
+
+<p>The second JSLint warning is about a missing "use strict" statement.</p>
+
+<p>"use strict" is used to initiate <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">JavaScript Strict Mode</a>. It prevents the use of certain JavaScript behaviors that are confusing and likely to introduce bugs.</p>
+
+<p>For example, you might assume that the value <code>011</code> is the same as <code>11</code>. But actually, the leading zero means that the number is interpreted as octal rather than decimal. Therefore, <code>011</code> is actually equal to <code>9</code>.</p>
+
+<p>In Strict Mode, the JavaScript runtime will throw a syntax error when it sees the value <code>011</code>: "Octal literals are not allowed in strict mode."</p>
+
+<p>You can use the "use strict" statement like this:</p>
+
+<pre><code>function sayHello(name){
+    "use strict";
+    // ...
+}
+</code></pre>
+
+<p>Many developers don't know that Strict Mode exists, so JSLint educates developers that they can use it to avoid common JavaScript pitfalls.</p>
+
+<h2 id="undeclaredname">Undeclared 'name'</h2>
+
+<p>When executing the assignment <code>name = "Douglas Crockford"</code> JavaScript will create a global variable called <code>name</code>. That's because we didn't declare a local <code>name</code> variable, so JavaScript defaults to the global scope.</p>
+
+<p>We usually don't want to create a global variable implicitly. Instead, we would make it clear that we are accessing global scope by writing <code>window.name = '...'</code>.</p>
+
+<p>The problem with unintentionally creating a global variable is that we could accidentally overwrite an existing global value. Likewise, the value we store in our variable might be overwritten by other parts of the code.</p>
+
+<p>JSLint will alert you to any unintended global variables you create.</p>
+
+<h2 id="expectedandinsteadsawend">Expected ';' and instead saw '(end)'</h2>
+
+<p>Many programming languages require semicolons at the end of each statement to separate the different instructions in the code. In JavaScript, however, these semicolons are optional.</p>
+
+<p>While semicolons aren't required in JavaScript, there are some situations where <a href="http://stackoverflow.com/a/1169596/1290545">their absence can create ambiguity and introduce bugs</a>.</p>
+
+<p>Because of this JSLint recommends that you always put a semicolon at the end of each statement.</p>
+
+<h2 id="benefitsoflintingjavascriptcode">Benefits of linting JavaScript code</h2>
+
+<p>As you can see in the example above, linters detect common programming errors and ensure that certain best practices are followed. Using them allows you to avoid some of JavaScript's confusing language features.</p>
+
+<p>As a result, linted code is likely to contain fewer bugs.</p>
+
+<p>Detecting these simple errors before a manual code review also makes reviewing the code more effective since the reviewer can focus on more complex issues.</p>
+
+<h2 id="howlinterswork">How Linters work</h2>
+
+<p>JavaScript linters parse and inspect source code, and then analyze the code's syntax and structure.</p>
+
+<p>If any code violates the rules defined by the linter a warning is shown. The warning explains what part of the code might lead to unexpected behavior and why.</p>
+
+<p>If you have trouble understanding a specific JSLint warning <a href="https://jslinterrors.com/">the JSLintErrors website</a> explains what they mean.</p>
+
+<h2 id="settinguplintingforyourproject">Setting up linting for your project</h2>
+
+<p>The easiest way to lint a bit of code is by using the online versions of <a href="http://www.jslint.com/">JSLint</a>, <a href="http://jshint.com/">JSHint</a> or <a href="http://eslint.org/demo/">ESLint</a>. You can just paste your source code and the tools will lint the code for you.</p>
+
+<p>However, this isn't convenient for anything but very small projects. For larger projects, you want to regularly and automatically lint all JavaScript files in the project.</p>
+
+<p>The best way to achieve that is using a task runner like <a href="http://gruntjs.com/">Grunt</a> or Gulp. You can set them up to run the linter every time you make a change to your source code.</p>
+
+<p>Read this post to find out how to <a href="http://www.codereadability.com/jshint-with-grunt/">set up JSHint with Grunt</a>.</p>
+        </section>
+
+
+<script type="text/javascript">
+amzn_assoc_placement = "adunit0";
+amzn_assoc_search_bar = "false";
+amzn_assoc_tracking_id = "mzrexamples-20";
+amzn_assoc_ad_mode = "manual";
+amzn_assoc_ad_type = "smart";
+amzn_assoc_marketplace = "amazon";
+amzn_assoc_region = "US";
+amzn_assoc_title = "Make your code awesome";
+amzn_assoc_linkid = "52e13d7487501a079692a6290f4b1742";
+amzn_assoc_asins = "0596802293,1449327680,0735619670,0132350882";
+</script>
+<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+
+<!--
+        <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+          #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+          /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+             We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+          #mc_embed_signup form {
+            padding: 0;
+          }
+          #mc_embed_signup input.button {
+            background: #000085;
+          }
+          #mc_embed_signup input.button:hover {
+            background: #000042;
+          }
+          #mc_embed_signup input[type="email"]{
+            border-radius: 5px;
+          }
+
+.mailchimp-message {
+display: none;
+    padding: 10px;
+  background: #fafafa;
+  line-height: 1.5em;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+
+ #newsletter-form p.weekly {
+  display: none;
+ }
+
+
+
+        </style>
+
+        <style>
+.newsletter-form-b #newsletter-form {
+    border: 5px solid #dc3e3b;
+    padding: 40px !important;
+    border-radius: 5px;
+    background-color: #fefbfc;
+}
+
+.newsletter-form-b #newsletter-form label {
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.newsletter-form-b #newsletter-form input[type="text"] {
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"] {
+  height: auto;
+  padding: 10px;
+  background-color: #dc3e3b;
+  font-size: 20px;
+  margin: 0;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"]:hover {
+  background-color: #961d1b;
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    margin-top: 20px;
+    font-size: 20px;
+    border-color: #aaa;
+    padding: 10px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 700px) {
+  .newsletter-form-b #newsletter-form input[type="submit"],
+  .newsletter-form-b #newsletter-form input[type="text"] {
+    width: 100%;
+  }
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    background-color: transparent;
+    border: none;
+    margin-top: 0;
+}
+
+.newsletter-form-b #newsletter-form p.weekly {
+  display: block;
+  margin-bottom: 40px;
+  margin-top: 0px
+}
+        </style>
+
+
+
+
+        <div id="mc_embed_signup">
+        <form id="newsletter-form"  method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" novalidate>
+            <div id="mc_embed_signup_scroll">
+          <label for="mce-EMAIL">Read more code readability articles like this</label>
+          <p class="weekly">Get an email with a new articles once a week.</p>
+          <input type="text" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address" required>
+            
+            <div style="position: absolute; left: -5000px;"><input type="text" name="b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            <div class="mailchimp-message">
+
+            </div>
+        </form>
+        </div>
+
+
+
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="/author/matt/">Matt Zeunert</a></h4>
+
+                    <p>Read <a href="/author/matt/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">London, UK</span>
+                    <span class="author-link icon-link"><a href="https://twitter.com/mattzeunert">https://twitter.com/mattzeunert</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=What%20are%20JavaScript%20linters%3F&amp;url=http://localhost:8080what-are-javascript-linters/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8080what-are-javascript-linters/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:8080what-are-javascript-linters/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+-->
+<hr>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'codereadability';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../jshint-with-grunt/">
+        <section class="post">
+            <h2>Setting up JSHint with Grunt</h2>
+            <p>JSHint is a popular JavaScript linter that can help detect low-quality code. It's good to run a linter every&hellip;</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../dont-use-short-circuiting-when-you-want-an-if-statement/">
+        <section class="post">
+            <h2>Don&#x27;t use short-circuiting when you want an if statement</h2>
+            <p>Evaluation short-circuiting is a feature of the logical operators AND and OR. It is meant to speed up code&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../">JavaScript Code Readability</a> &copy; 2019</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64817302-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../assets/js/index.js"></script>
+
+<!--
+    <script>
+
+
+
+      if (window.ga === undefined) {
+        window.ga = function(){
+          console.log("ga blocked")
+        }
+      }
+
+        var $ = jQuery;
+
+
+        if (localStorage.getItem("gaDimension1") === null) {
+            var dimension1 = Math.random() > .5 ? "B" : "A";
+            ga('set', 'dimension1', dimension1);
+            ga('send', 'event', 'Dimension1 Set', dimension1, location.pathname);
+            localStorage.setItem("gaDimension1", dimension1);
+        }
+
+        if (localStorage.getItem("gaDimension1")==="B") {
+          $("body").addClass("newsletter-form-b");
+        }
+
+
+          $("#newsletter-form").submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var form = $(this);
+
+            function updateUi(msg) {
+              $(".mailchimp-message").show().html(msg.replace("0 - ", ""));
+
+            }
+
+            $("#mc-embedded-subscribe").prop("disabled", true);
+            $("#mce-EMAIL").prop("disabled", true);
+
+            var email = $("#mce-EMAIL").val();
+
+            $.ajax({
+                type: "GET",
+                url: "//mostlystatic.us8.list-manage.com/subscribe/post-json?u=6e1d1f58acfc60f4eb4adce31&amp;id=3c7a4d756e&c=?",
+                data: "b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e=&EMAIL=" + encodeURIComponent(email),
+                cache       : false,
+                dataType    : 'json',
+                contentType: "application/json; charset=utf-8",
+                error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+                success     : function(data) {
+                    updateUi(data.msg);
+                    if (data.result != "success") {
+                      $("#mc-embedded-subscribe").prop("disabled", false);
+                        $("#mce-EMAIL").prop("disabled", false);
+                        ga('send', 'event', 'Failed Newsletter Subscribe', location.pathname, email);
+                        ga('set', 'dimension1', dimensionValue);
+                        // Something went wrong, do something to notify the user. maybe alert(data.msg);
+                    } else {
+                        // It worked, carry on...
+                        ga('send', 'event', 'Newsletter Subscribe', location.pathname, email);
+                        $('#newsletter-form label, #newsletter-form p, #newsletter-form input[type="text"], #newsletter-form input[type="submit"]').hide();
+                    }
+                }
+            });
+
+            return false;
+
+          })
+        </script>
+-->
+
+
+</body>
+</html>

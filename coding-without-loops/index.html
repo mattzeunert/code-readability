@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Coding without loops</title>
+    <meta name="description" content>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400">
+
+    <link rel="canonical" href="http://localhost:8080coding-without-loops/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:8080coding-without-loops/amp/">
+    
+    <meta property="og:site_name" content="JavaScript Code Readability">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Coding without loops">
+    <meta property="og:description" content="Loops are one of the first concepts new programmers learn about. However, they often aren&#x27;t the most readable way to write code that works with lists. This article describes what you can use to replace loops in your code. What&#x27;s wrong with loops? Loops make sense when you think about">
+    <meta property="og:url" content="http://localhost:8080coding-without-loops/">
+    <meta property="article:published_time" content="2015-08-08T11:03:29.000Z">
+    <meta property="article:modified_time" content="2015-08-14T09:27:17.000Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Coding without loops">
+    <meta name="twitter:description" content="Loops are one of the first concepts new programmers learn about. However, they often aren&#x27;t the most readable way to write code that works with lists. This article describes what you can use to replace loops in your code. What&#x27;s wrong with loops? Loops make sense when you think about">
+    <meta name="twitter:url" content="http://localhost:8080coding-without-loops/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Matt Zeunert">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "JavaScript Code Readability",
+        "logo": "http://localhost:8080ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Matt Zeunert",
+        "url": "http://localhost:8080author/matt/",
+        "sameAs": [
+            "https://twitter.com/mattzeunert"
+        ]
+    },
+    "headline": "Coding without loops",
+    "url": "http://localhost:8080coding-without-loops/",
+    "datePublished": "2015-08-08T11:03:29.000Z",
+    "dateModified": "2015-08-14T09:27:17.000Z",
+    "description": "Loops are one of the first concepts new programmers learn about. However, they often aren&#x27;t the most readable way to write code that works with lists. This article describes what you can use to replace loops in your code. What&#x27;s wrong with loops? Loops make sense when you think about",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.codereadability.com"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="JavaScript Code Readability" href="http://localhost:8080rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="../">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="../rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<style>
+.pull-quote {
+  float: right;
+  font-size: 28px;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  line-height: 1.2em;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  color: white;
+  background: #3A4145;
+  padding: 20px;
+  text-align: center;
+}
+.pull-quote:before {
+  content: "\201C";
+}
+.pull-quote:after {
+  content: "\201D";
+}
+
+@media only screen and (max-width: 900px) {
+  .pull-quote {
+    width: 100%;
+    max-width: none;
+    font-size: 24px;
+  }
+}
+</style>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Coding without loops</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-08-08">08 August 2015</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>Loops are one of the first concepts new programmers learn about. However, they often aren't the most readable way to write code that works with lists.</p>
+
+<p>This article describes what you can use to replace loops in your code.</p>
+
+<h2 id="whatswrongwithloops">What's wrong with loops?</h2>
+
+<p>Loops make sense when you think about indices and memory locations. But that's what the computer does, not how people think about problems they want to solve.</p>
+
+<p>Humans think about what they want to do with each item. They usually don't care about item number 869 when going through a list - getting whatever is the next item is just fine.</p>
+
+<p>It's odd that we're still using loops so often, given that there are good alternatives.</p>
+
+<h2 id="foreach">forEach</h2>
+
+<p>Loops are most often used to iterate over a list:</p>
+
+<pre><code>for (var i=0; i&lt;books.length; i++) {
+    var book = books[i];
+    console.log(book.title);
+}
+</code></pre>
+
+<p>The for loop in this example allows you to look at each book individually and then take an action based on it. In this case, we print the title of the book to the console.</p>
+
+<p>We can rewrite this code using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach"><code>forEach</code></a> function that's available on lists in JavaScript. As the name of the function suggests, <code>forEach</code> allows you to take an action for each item in a list.</p>
+
+<pre><code>books.forEach(function(book, i){
+    console.log(book.title);
+});
+</code></pre>
+
+<p>A function is used to represent the "action". If you have five books in your list the function is going to be called 5 times, and each time a different book is passed in as the first argument.</p>
+
+<p>By using <code>forEach</code> we can hide the underlying counting logic that the loop is using, and focus on communicating what we want to do.</p>
+
+<h2 id="filter">filter</h2>
+
+<p>When working with lists, you often need to search for items that match specific criteria. For example, you could filter a list of books for a particular author.</p>
+
+<pre><code>var booksByJohnResig = [];
+for (var i=0; i&lt;books.length; i++) {
+     var book = books[i];
+     if (book.author === "John Resig") {
+         booksByJohnResig.push(book);
+    }
+}
+</code></pre>
+
+<p>Based on the existing list of books we generate a new list that only contains books written by John Resig.</p>
+
+<p>JavaScript has a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter"><code>filter</code></a> function that's made specifically for this purpose. It can significantly shorten our code and make it more self-explanatory:</p>
+
+<pre><code>var booksByJohnResig = books.filter(function(book){
+    return book.author === "John Resig";
+});
+</code></pre>
+
+<p>This works by calling the function that's passed into <code>filter</code> for every book in the list, just like <code>forEach</code> does. In this case, the function performs a string comparison with the name of the author we're looking for. If our function returns true the book is included in booksByJohnResig, otherwise it isn't.</p>
+
+<p>You could also go further and use <a href="http://www.codereadability.com/why-underscore-is-awesome/">Underscore</a>'s <a href="http://underscorejs.org/#filter"><code>filter</code></a> method to further simplify the code:</p>
+
+<pre><code>var booksByJohnResig = _.filter(books, {author: "John Resig"});
+</code></pre>
+
+<p>Using Underscore also has the added advantage of providing consistent cross-browser support. The <code>list.filter</code> and <code>list.forEach</code> methods weren't available in Internet Explorer until version 9.</p>
+
+<p>Replacing the loop with a filter function not only shortens our code, it also makes it more expressive.</p>
+
+<h2 id="map">map</h2>
+
+<p>You can use the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map"><code>map</code></a> function to transform each item in a list into something else.</p>
+
+<p>For example, you could use <code>map</code> to get a list of authors based on the list of books you have:</p>
+
+<pre><code>var authorList = books.map(function(book){
+     return book.author;
+});
+</code></pre>
+
+<p>Or generate a list that contains the number of characters in each book title:</p>
+
+<pre><code>var listOfTitleLengths = books.map(function(book){
+     return book.title.length;
+});
+</code></pre>
+
+<p>Calling <code>map</code> doesn't modify the original list of books. Instead, it creates a new list and then generates new items for it. The function that's passed into <code>map</code> is called once for each list element and returns the value that should be added to the new list.</p>
+
+<p>Compared to a loop, <code>map</code> shifts the focus of our code from iterating over a list to the transformation that happens to each element.</p>
+
+<h2 id="writeyourownloopreplacementfunctions">Write your own loop replacement functions</h2>
+
+<p>A loop is very rarely the optimal way to express what your code does.</p>
+
+<p>If there's no native browser function like <code>forEach</code>, <code>filter</code> and <code>map</code>, try to wrap the looping code you write in a helper function. Give your helper function a meaningful name so that it's clear what its purpose is.</p>
+
+<p>For example, you could write this code if you needed to perform an action (i.e. call a function) for a fixed number of times:</p>
+
+<pre><code>function times(howManyTimes, action) {
+    for (var i=0; i&lt;howManyTimes; i++){
+        action();
+    }
+}
+</code></pre>
+
+<p>The <code>times</code> function can then be used to print 5 random numbers, without having to mention loops in the code:</p>
+
+<pre><code>times(5, function(){
+    console.log(Math.random());
+});
+</code></pre>
+
+<p>This helper function allows us to say "Print a random number 5 times" instead of "Count from 0 to 4 and print a random number every time".</p>
+        </section>
+
+
+<script type="text/javascript">
+amzn_assoc_placement = "adunit0";
+amzn_assoc_search_bar = "false";
+amzn_assoc_tracking_id = "mzrexamples-20";
+amzn_assoc_ad_mode = "manual";
+amzn_assoc_ad_type = "smart";
+amzn_assoc_marketplace = "amazon";
+amzn_assoc_region = "US";
+amzn_assoc_title = "Make your code awesome";
+amzn_assoc_linkid = "52e13d7487501a079692a6290f4b1742";
+amzn_assoc_asins = "0596802293,1449327680,0735619670,0132350882";
+</script>
+<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+
+<!--
+        <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+          #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+          /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+             We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+          #mc_embed_signup form {
+            padding: 0;
+          }
+          #mc_embed_signup input.button {
+            background: #000085;
+          }
+          #mc_embed_signup input.button:hover {
+            background: #000042;
+          }
+          #mc_embed_signup input[type="email"]{
+            border-radius: 5px;
+          }
+
+.mailchimp-message {
+display: none;
+    padding: 10px;
+  background: #fafafa;
+  line-height: 1.5em;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+
+ #newsletter-form p.weekly {
+  display: none;
+ }
+
+
+
+        </style>
+
+        <style>
+.newsletter-form-b #newsletter-form {
+    border: 5px solid #dc3e3b;
+    padding: 40px !important;
+    border-radius: 5px;
+    background-color: #fefbfc;
+}
+
+.newsletter-form-b #newsletter-form label {
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.newsletter-form-b #newsletter-form input[type="text"] {
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"] {
+  height: auto;
+  padding: 10px;
+  background-color: #dc3e3b;
+  font-size: 20px;
+  margin: 0;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"]:hover {
+  background-color: #961d1b;
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    margin-top: 20px;
+    font-size: 20px;
+    border-color: #aaa;
+    padding: 10px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 700px) {
+  .newsletter-form-b #newsletter-form input[type="submit"],
+  .newsletter-form-b #newsletter-form input[type="text"] {
+    width: 100%;
+  }
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    background-color: transparent;
+    border: none;
+    margin-top: 0;
+}
+
+.newsletter-form-b #newsletter-form p.weekly {
+  display: block;
+  margin-bottom: 40px;
+  margin-top: 0px
+}
+        </style>
+
+
+
+
+        <div id="mc_embed_signup">
+        <form id="newsletter-form"  method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" novalidate>
+            <div id="mc_embed_signup_scroll">
+          <label for="mce-EMAIL">Read more code readability articles like this</label>
+          <p class="weekly">Get an email with a new articles once a week.</p>
+          <input type="text" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address" required>
+            
+            <div style="position: absolute; left: -5000px;"><input type="text" name="b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            <div class="mailchimp-message">
+
+            </div>
+        </form>
+        </div>
+
+
+
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="/author/matt/">Matt Zeunert</a></h4>
+
+                    <p>Read <a href="/author/matt/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">London, UK</span>
+                    <span class="author-link icon-link"><a href="https://twitter.com/mattzeunert">https://twitter.com/mattzeunert</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Coding%20without%20loops&amp;url=http://localhost:8080coding-without-loops/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8080coding-without-loops/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:8080coding-without-loops/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+-->
+<hr>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'codereadability';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../why-you-dont-have-to-worry-about-the-file-size-of-your-code/">
+        <section class="post">
+            <h2>Why you don&#x27;t have to worry about file size of your code</h2>
+            <p>I often see people on programming forums argue that certain coding techniques or naming conventions increase your code's file&hellip;</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../naming-variables-that-store-dom-elements/">
+        <section class="post">
+            <h2>Naming variables that store DOM elements</h2>
+            <p>There are several common naming conventions for variables that refer to DOM elements. This article describes how they work&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../">JavaScript Code Readability</a> &copy; 2019</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64817302-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../assets/js/index.js"></script>
+
+<!--
+    <script>
+
+
+
+      if (window.ga === undefined) {
+        window.ga = function(){
+          console.log("ga blocked")
+        }
+      }
+
+        var $ = jQuery;
+
+
+        if (localStorage.getItem("gaDimension1") === null) {
+            var dimension1 = Math.random() > .5 ? "B" : "A";
+            ga('set', 'dimension1', dimension1);
+            ga('send', 'event', 'Dimension1 Set', dimension1, location.pathname);
+            localStorage.setItem("gaDimension1", dimension1);
+        }
+
+        if (localStorage.getItem("gaDimension1")==="B") {
+          $("body").addClass("newsletter-form-b");
+        }
+
+
+          $("#newsletter-form").submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var form = $(this);
+
+            function updateUi(msg) {
+              $(".mailchimp-message").show().html(msg.replace("0 - ", ""));
+
+            }
+
+            $("#mc-embedded-subscribe").prop("disabled", true);
+            $("#mce-EMAIL").prop("disabled", true);
+
+            var email = $("#mce-EMAIL").val();
+
+            $.ajax({
+                type: "GET",
+                url: "//mostlystatic.us8.list-manage.com/subscribe/post-json?u=6e1d1f58acfc60f4eb4adce31&amp;id=3c7a4d756e&c=?",
+                data: "b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e=&EMAIL=" + encodeURIComponent(email),
+                cache       : false,
+                dataType    : 'json',
+                contentType: "application/json; charset=utf-8",
+                error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+                success     : function(data) {
+                    updateUi(data.msg);
+                    if (data.result != "success") {
+                      $("#mc-embedded-subscribe").prop("disabled", false);
+                        $("#mce-EMAIL").prop("disabled", false);
+                        ga('send', 'event', 'Failed Newsletter Subscribe', location.pathname, email);
+                        ga('set', 'dimension1', dimensionValue);
+                        // Something went wrong, do something to notify the user. maybe alert(data.msg);
+                    } else {
+                        // It worked, carry on...
+                        ga('send', 'event', 'Newsletter Subscribe', location.pathname, email);
+                        $('#newsletter-form label, #newsletter-form p, #newsletter-form input[type="text"], #newsletter-form input[type="submit"]').hide();
+                    }
+                }
+            });
+
+            return false;
+
+          })
+        </script>
+-->
+
+
+</body>
+</html>

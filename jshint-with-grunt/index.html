@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Setting up JSHint with Grunt</title>
+    <meta name="description" content>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400">
+
+    <link rel="canonical" href="http://localhost:8080jshint-with-grunt/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:8080jshint-with-grunt/amp/">
+    
+    <meta property="og:site_name" content="JavaScript Code Readability">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Setting up JSHint with Grunt">
+    <meta property="og:description" content="JSHint is a popular JavaScript linter that can help detect low-quality code. It&#x27;s good to run a linter every time you edit any JavaScript source code. You can automate this with using a tool called Grunt. This article will take you from installing Grunt to automating the linting process. Installing">
+    <meta property="og:url" content="http://localhost:8080jshint-with-grunt/">
+    <meta property="article:published_time" content="2015-11-01T17:57:58.000Z">
+    <meta property="article:modified_time" content="2015-11-03T00:04:23.000Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Setting up JSHint with Grunt">
+    <meta name="twitter:description" content="JSHint is a popular JavaScript linter that can help detect low-quality code. It&#x27;s good to run a linter every time you edit any JavaScript source code. You can automate this with using a tool called Grunt. This article will take you from installing Grunt to automating the linting process. Installing">
+    <meta name="twitter:url" content="http://localhost:8080jshint-with-grunt/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Matt Zeunert">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "JavaScript Code Readability",
+        "logo": "http://localhost:8080ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Matt Zeunert",
+        "url": "http://localhost:8080author/matt/",
+        "sameAs": [
+            "https://twitter.com/mattzeunert"
+        ]
+    },
+    "headline": "Setting up JSHint with Grunt",
+    "url": "http://localhost:8080jshint-with-grunt/",
+    "datePublished": "2015-11-01T17:57:58.000Z",
+    "dateModified": "2015-11-03T00:04:23.000Z",
+    "description": "JSHint is a popular JavaScript linter that can help detect low-quality code. It&#x27;s good to run a linter every time you edit any JavaScript source code. You can automate this with using a tool called Grunt. This article will take you from installing Grunt to automating the linting process. Installing",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.codereadability.com"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="JavaScript Code Readability" href="http://localhost:8080rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="../">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="../rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<style>
+.pull-quote {
+  float: right;
+  font-size: 28px;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  line-height: 1.2em;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  color: white;
+  background: #3A4145;
+  padding: 20px;
+  text-align: center;
+}
+.pull-quote:before {
+  content: "\201C";
+}
+.pull-quote:after {
+  content: "\201D";
+}
+
+@media only screen and (max-width: 900px) {
+  .pull-quote {
+    width: 100%;
+    max-width: none;
+    font-size: 24px;
+  }
+}
+</style>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Setting up JSHint with Grunt</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-11-01">01 November 2015</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>JSHint is a popular <a href="http://www.codereadability.com/what-are-javascript-linters/">JavaScript</a> linter that can help detect low-quality code.</p>
+
+<p>It's good to run a linter every time you edit any JavaScript source code. You can automate this with using a tool called <a href="http://gruntjs.com/">Grunt</a>.</p>
+
+<p>This article will take you from installing Grunt to automating the linting process.</p>
+
+<h2 id="installingnodenpm">Installing Node / NPM</h2>
+
+<p>The tools we are going to use are all written in JavaScript. To run them we need to install a JavaScript runtime called Node.</p>
+
+<p>Follow the instructions on the <a href="https://docs.npmjs.com/getting-started/installing-node">installation page</a>. Installing Node will also automatically install NPM, the Node Package Manager.</p>
+
+<h2 id="initializingannpmpackagejsonfile">Initializing an NPM package.json file</h2>
+
+<p>NPM allows us to install Node packages like Grunt or JSHint. There's a <a href="https://docs.npmjs.com/getting-started/what-is-npm">video on the NPM website explaining what NPM does</a>.</p>
+
+<p><center>  </center></p>
+
+<iframe width="420" height="315" src="https://www.youtube.com/embed/pa4dc480Apo" frameborder="0" allowfullscreen></iframe>  
+
+<p></p>
+
+<p>Like Grunt and JSHint, your own code is also going to be a package. So to get started we need to initialize our package by running this command in the directory that our code is in:</p>
+
+<pre><code>npm init
+</code></pre>
+
+<p>NPM will then ask you a series of questions. The exact answers you give aren't really important, since you're not going to make your package public.</p>
+
+<p>This seems like a lot of work to lint some code, doesn't it!</p>
+
+<p>The reason we use NPM is that, once it's set up, we can easily add new steps to our development process. In addition to linting we might want to <a href="http://www.hanselman.com/blog/TheImportanceAndEaseOfMinifyingYourCSSAndJavaScriptAndOptimizingPNGsForYourBlogOrWebsite.aspx">minify our code</a> or check that it follows our <a href="http://www.codereadability.com/why-use-a-style-guide/">style guide</a>.</p>
+
+<p>After running <code>npm init</code> you should have a file called <code>package.json</code> in your directory.</p>
+
+<h2 id="installinggrunt">Installing Grunt</h2>
+
+<p>To install Grunt run</p>
+
+<pre><code>npm install grunt --save-dev
+</code></pre>
+
+<p>This will download Grunt into a folder called <code>node_modules</code>.</p>
+
+<p>In your package.json you'll find a new section called <code>devDependencies</code>:</p>
+
+<pre><code>"devDependencies": {
+    "grunt": "^0.4.5"
+}
+</code></pre>
+
+<p>By adding <code>--save-dev</code> to our <code>npm install</code> command, we can keep track of the Node packages we've installed. Then, instead of storing the packages in source control like a Git or SVN repository, we can run <code>npm install</code> to download all the dependencies we need.</p>
+
+<p>Grunt also has a command line interface (CLI) that needs to be installed globally (using the <code>-g</code> flag):</p>
+
+<pre><code>npm install grunt-cli -g
+</code></pre>
+
+<p>You can now run Grunt!</p>
+
+<pre><code>grunt
+</code></pre>
+
+<p>Since we haven't configured it Grunt will show an error message:</p>
+
+<blockquote>
+  <p>A valid Gruntfile could not be found. Please see the getting started guide for
+  more information on how to configure grunt: <a href="http://gruntjs.com/getting-started">http://gruntjs.com/getting-started</a> <br>
+  Fatal error: Unable to find Gruntfile.</p>
+</blockquote>
+
+<h2 id="creatingagruntfile">Creating a Gruntfile</h2>
+
+<p>Create a new empty JavaScript file called <code>Gruntfile.js</code> in the same directory as your <code>package.json</code> file.</p>
+
+<p>Now running <code>grunt</code> will give you a different error:</p>
+
+<blockquote>
+  <p>Warning: Task "default" not found. Use --force to continue.</p>
+  
+  <p>Aborted due to warnings.</p>
+</blockquote>
+
+<p>Instead of <code>default</code> our task will be called <code>jshint</code>. So we'll be using</p>
+
+<pre><code>grunt jshint
+</code></pre>
+
+<p>to run the task.</p>
+
+<h2 id="installingandconfiguringjshint">Installing and configuring JSHint</h2>
+
+<p>Now Grunt still isn't able to find a task called <code>jshint</code>. We first need to install JSHint and configure it.</p>
+
+<p>First we install the JSHint Grunt plugin: </p>
+
+<pre><code>npm install grunt-contrib-jshint --save-dev
+</code></pre>
+
+<p>Then we can load the JSHint package by putting this code into our <code>Gruntfile.js</code>:</p>
+
+<pre><code>module.exports = function(grunt) {
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+};
+</code></pre>
+
+<p>Now running <code>grunt jshint</code> will find the task, but show a different error message:</p>
+
+<blockquote>
+  <p>&gt;&gt; No "jshint" targets found.
+  Warning: Task "jshint" failed. Use --force to continue.</p>
+  
+  <p>Aborted due to warnings.</p>
+</blockquote>
+
+<p>We've installed Grunt correctly, but it still doesn't know which JavaScript files we want to lint.</p>
+
+<p>To lint the correct files we need to add a configuration object to the Gruntfile:</p>
+
+<pre><code>module.exports = function(grunt) {
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.initConfig({
+        jshint: {
+            all: ['Gruntfile.js']
+        }
+    });
+}
+</code></pre>
+
+<p>We pass the configuration object into the <code>grunt.initConfig</code> function. In the object we specify the task that we want to configure (jshint).</p>
+
+<p>In this case, we want to configure JSHint to lint the <code>Gruntfile.js</code> file.</p>
+
+<p>Now running <code>grunt jshint</code> correctly lints our file:</p>
+
+<blockquote>
+  <p>Running "jshint:all" (jshint) task</p>
+
+<pre><code>Gruntfile.js
+  8 |}
+      ^ Missing semicolon.
+</code></pre>
+  
+  <p>&gt; &gt; 1 error in 1 file <br>
+  Warning: Task "jshint:all" failed. Use --force to continue.</p>
+  
+  <p>Aborted due to warnings.</p>
+</blockquote>
+
+<p>You can see that the <code>module.exports = function(){...}</code> assignment doesn't end on a semicolon. Let's fix that and run <code>grunt jshint</code> again:</p>
+
+<blockquote>
+  <p>Running "jshint:all" (jshint) task
+  &gt;&gt; 1 file lint free.</p>
+  
+  <p>Done, without errors.</p>
+</blockquote>
+
+<p>Now JSHint no longer complains about our code.</p>
+
+<h2 id="runningjshintonmultiplefilesatonce">Running JSHint on multiple files at once</h2>
+
+<p>The file paths that we pass into Grunt supports several <a href="http://gruntjs.com/configuring-tasks">globbing patterns</a>. <code>**</code> and <code>*</code> are two of them.</p>
+
+<p>For example, if your application code is inside a folder called <code>app</code> this would be the correct configuration:</p>
+
+<pre><code>jshint: {
+    all: ['Gruntfile.js', 'app/**/*.js']
+}
+</code></pre>
+
+<p><code>**</code> matches any file or directory, including nested directories.</p>
+
+<p><code>*.js</code> matches all files whose names end on <code>.js</code>.</p>
+
+<p>Together, <code>app/**/*.js</code> will match all JavaScript files inside the <code>app</code> directory or any of its sub-directories.</p>
+
+<p>Running <code>grunt jshint</code> will now lint all of those files and <code>Gruntfile.js</code>.</p>
+
+<h2 id="automaticallylintingfileswhentheychange">Automatically linting files when they change</h2>
+
+<p>To do this we need to install a Grunt plugin called <code>watch</code> that detects when a file has been updated:</p>
+
+<pre><code>npm install grunt-contrib-watch --save-dev
+</code></pre>
+
+<p>Then we configure the <code>watch</code> task in <code>Gruntfile.js</code>:</p>
+
+<pre><code>grunt.initConfig({
+    jshint: {
+        all: ['Gruntfile.js']
+    },
+    watch: {
+        files: ['Gruntfile.js'],
+        tasks: ['jshint']
+    }
+});
+</code></pre>
+
+<p>If any code in our <code>files</code> changes we want to run the <code>jshint</code> task. That's equivalent to running <code>grunt jshint</code>.</p>
+
+<p>You can use file name globbing in the same way as in the JSHint Grunt task.</p>
+
+<p>Run the <code>watch</code> task and then edit and save your Gruntfile:</p>
+
+<pre><code>grunt watch
+</code></pre>
+
+<p>Every time you save the file you should now see <code>jshint</code> task running in the console.</p>
+        </section>
+
+
+<script type="text/javascript">
+amzn_assoc_placement = "adunit0";
+amzn_assoc_search_bar = "false";
+amzn_assoc_tracking_id = "mzrexamples-20";
+amzn_assoc_ad_mode = "manual";
+amzn_assoc_ad_type = "smart";
+amzn_assoc_marketplace = "amazon";
+amzn_assoc_region = "US";
+amzn_assoc_title = "Make your code awesome";
+amzn_assoc_linkid = "52e13d7487501a079692a6290f4b1742";
+amzn_assoc_asins = "0596802293,1449327680,0735619670,0132350882";
+</script>
+<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+
+<!--
+        <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+          #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+          /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+             We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+          #mc_embed_signup form {
+            padding: 0;
+          }
+          #mc_embed_signup input.button {
+            background: #000085;
+          }
+          #mc_embed_signup input.button:hover {
+            background: #000042;
+          }
+          #mc_embed_signup input[type="email"]{
+            border-radius: 5px;
+          }
+
+.mailchimp-message {
+display: none;
+    padding: 10px;
+  background: #fafafa;
+  line-height: 1.5em;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+
+ #newsletter-form p.weekly {
+  display: none;
+ }
+
+
+
+        </style>
+
+        <style>
+.newsletter-form-b #newsletter-form {
+    border: 5px solid #dc3e3b;
+    padding: 40px !important;
+    border-radius: 5px;
+    background-color: #fefbfc;
+}
+
+.newsletter-form-b #newsletter-form label {
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.newsletter-form-b #newsletter-form input[type="text"] {
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"] {
+  height: auto;
+  padding: 10px;
+  background-color: #dc3e3b;
+  font-size: 20px;
+  margin: 0;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"]:hover {
+  background-color: #961d1b;
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    margin-top: 20px;
+    font-size: 20px;
+    border-color: #aaa;
+    padding: 10px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 700px) {
+  .newsletter-form-b #newsletter-form input[type="submit"],
+  .newsletter-form-b #newsletter-form input[type="text"] {
+    width: 100%;
+  }
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    background-color: transparent;
+    border: none;
+    margin-top: 0;
+}
+
+.newsletter-form-b #newsletter-form p.weekly {
+  display: block;
+  margin-bottom: 40px;
+  margin-top: 0px
+}
+        </style>
+
+
+
+
+        <div id="mc_embed_signup">
+        <form id="newsletter-form"  method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" novalidate>
+            <div id="mc_embed_signup_scroll">
+          <label for="mce-EMAIL">Read more code readability articles like this</label>
+          <p class="weekly">Get an email with a new articles once a week.</p>
+          <input type="text" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address" required>
+            
+            <div style="position: absolute; left: -5000px;"><input type="text" name="b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            <div class="mailchimp-message">
+
+            </div>
+        </form>
+        </div>
+
+
+
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="/author/matt/">Matt Zeunert</a></h4>
+
+                    <p>Read <a href="/author/matt/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">London, UK</span>
+                    <span class="author-link icon-link"><a href="https://twitter.com/mattzeunert">https://twitter.com/mattzeunert</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Setting%20up%20JSHint%20with%20Grunt&amp;url=http://localhost:8080jshint-with-grunt/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8080jshint-with-grunt/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:8080jshint-with-grunt/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+-->
+<hr>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'codereadability';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../boolean-arguments/">
+        <section class="post">
+            <h2>More Readable Alternatives To Boolean Function Parameters</h2>
+            <p>Boolean function parameters are hard to read. What could true possibly mean here? settings.createSetting("userAge", true) You need&hellip;</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../what-are-javascript-linters/">
+        <section class="post">
+            <h2>What are JavaScript linters?</h2>
+            <p>Code linting is a way to increase code quality. Linters like JSLint or JSHint can detect potential bugs, as&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../">JavaScript Code Readability</a> &copy; 2019</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64817302-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../assets/js/index.js"></script>
+
+<!--
+    <script>
+
+
+
+      if (window.ga === undefined) {
+        window.ga = function(){
+          console.log("ga blocked")
+        }
+      }
+
+        var $ = jQuery;
+
+
+        if (localStorage.getItem("gaDimension1") === null) {
+            var dimension1 = Math.random() > .5 ? "B" : "A";
+            ga('set', 'dimension1', dimension1);
+            ga('send', 'event', 'Dimension1 Set', dimension1, location.pathname);
+            localStorage.setItem("gaDimension1", dimension1);
+        }
+
+        if (localStorage.getItem("gaDimension1")==="B") {
+          $("body").addClass("newsletter-form-b");
+        }
+
+
+          $("#newsletter-form").submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var form = $(this);
+
+            function updateUi(msg) {
+              $(".mailchimp-message").show().html(msg.replace("0 - ", ""));
+
+            }
+
+            $("#mc-embedded-subscribe").prop("disabled", true);
+            $("#mce-EMAIL").prop("disabled", true);
+
+            var email = $("#mce-EMAIL").val();
+
+            $.ajax({
+                type: "GET",
+                url: "//mostlystatic.us8.list-manage.com/subscribe/post-json?u=6e1d1f58acfc60f4eb4adce31&amp;id=3c7a4d756e&c=?",
+                data: "b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e=&EMAIL=" + encodeURIComponent(email),
+                cache       : false,
+                dataType    : 'json',
+                contentType: "application/json; charset=utf-8",
+                error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+                success     : function(data) {
+                    updateUi(data.msg);
+                    if (data.result != "success") {
+                      $("#mc-embedded-subscribe").prop("disabled", false);
+                        $("#mce-EMAIL").prop("disabled", false);
+                        ga('send', 'event', 'Failed Newsletter Subscribe', location.pathname, email);
+                        ga('set', 'dimension1', dimensionValue);
+                        // Something went wrong, do something to notify the user. maybe alert(data.msg);
+                    } else {
+                        // It worked, carry on...
+                        ga('send', 'event', 'Newsletter Subscribe', location.pathname, email);
+                        $('#newsletter-form label, #newsletter-form p, #newsletter-form input[type="text"], #newsletter-form input[type="submit"]').hide();
+                    }
+                }
+            });
+
+            return false;
+
+          })
+        </script>
+-->
+
+
+</body>
+</html>

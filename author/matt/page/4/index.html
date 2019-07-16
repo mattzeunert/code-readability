@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Matt Zeunert - Page 4 - JavaScript Code Readability</title>
+    <meta name="description" content>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/screen.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400">
+
+    <link rel="canonical" href="http://localhost:8080author/matt/page/4/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="prev" href="http://localhost:8080author/matt/page/3/">
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="JavaScript Code Readability" href="http://localhost:8080rss/">
+</head>
+<body class="author-template author-matt paged archive-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="../../../../">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="../../../../rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+    <header class="main-header author-head no-cover">
+        <nav class="main-nav overlay clearfix">
+            
+                <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+        </nav>
+    </header>
+
+    <section class="author-profile inner">
+        <h1 class="author-title">Matt Zeunert</h1>
+        <div class="author-meta">
+            <span class="author-location icon-location">London, UK</span>
+            <span class="author-link icon-link"><a href="https://twitter.com/mattzeunert">https://twitter.com/mattzeunert</a></span>
+            <span class="author-stats"><i class="icon-stats"></i> 31 posts</span>
+        </div>
+    </section>
+
+<main class="content" role="main">
+
+    <div class="extra-pagination inner">
+    <nav class="pagination" role="navigation">
+        <a class="newer-posts" href="../3/"><span aria-hidden="true">&larr;</span> Newer Posts</a>
+    <span class="page-number">Page 4 of 4</span>
+</nav>
+
+</div>
+
+<article class="post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="../../../../javascript-default-parameters-with-or-operator/">Be careful when using || to set default values in JavaScript</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p>(This post was originally titled "Don't use || to set default values in JavaScript". However, if you're careful to avoid the pitfalls and your whole team understands <a class="read-more" href="../../../../javascript-default-parameters-with-or-operator/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        <a href="../../">Matt Zeunert</a>
+        
+        <time class="post-date" datetime="2015-07-08">08 July 2015</time>
+    </footer>
+</article>
+
+<nav class="pagination" role="navigation">
+        <a class="newer-posts" href="../3/"><span aria-hidden="true">&larr;</span> Newer Posts</a>
+    <span class="page-number">Page 4 of 4</span>
+</nav>
+
+
+</main>
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../../../../">JavaScript Code Readability</a> &copy; 2019</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64817302-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="../../../../assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../../../../assets/js/index.js"></script>
+
+<!--
+    <script>
+
+
+
+      if (window.ga === undefined) {
+        window.ga = function(){
+          console.log("ga blocked")
+        }
+      }
+
+        var $ = jQuery;
+
+
+        if (localStorage.getItem("gaDimension1") === null) {
+            var dimension1 = Math.random() > .5 ? "B" : "A";
+            ga('set', 'dimension1', dimension1);
+            ga('send', 'event', 'Dimension1 Set', dimension1, location.pathname);
+            localStorage.setItem("gaDimension1", dimension1);
+        }
+
+        if (localStorage.getItem("gaDimension1")==="B") {
+          $("body").addClass("newsletter-form-b");
+        }
+
+
+          $("#newsletter-form").submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var form = $(this);
+
+            function updateUi(msg) {
+              $(".mailchimp-message").show().html(msg.replace("0 - ", ""));
+
+            }
+
+            $("#mc-embedded-subscribe").prop("disabled", true);
+            $("#mce-EMAIL").prop("disabled", true);
+
+            var email = $("#mce-EMAIL").val();
+
+            $.ajax({
+                type: "GET",
+                url: "//mostlystatic.us8.list-manage.com/subscribe/post-json?u=6e1d1f58acfc60f4eb4adce31&amp;id=3c7a4d756e&c=?",
+                data: "b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e=&EMAIL=" + encodeURIComponent(email),
+                cache       : false,
+                dataType    : 'json',
+                contentType: "application/json; charset=utf-8",
+                error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+                success     : function(data) {
+                    updateUi(data.msg);
+                    if (data.result != "success") {
+                      $("#mc-embedded-subscribe").prop("disabled", false);
+                        $("#mce-EMAIL").prop("disabled", false);
+                        ga('send', 'event', 'Failed Newsletter Subscribe', location.pathname, email);
+                        ga('set', 'dimension1', dimensionValue);
+                        // Something went wrong, do something to notify the user. maybe alert(data.msg);
+                    } else {
+                        // It worked, carry on...
+                        ga('send', 'event', 'Newsletter Subscribe', location.pathname, email);
+                        $('#newsletter-form label, #newsletter-form p, #newsletter-form input[type="text"], #newsletter-form input[type="submit"]').hide();
+                    }
+                }
+            });
+
+            return false;
+
+          })
+        </script>
+-->
+
+
+</body>
+</html>

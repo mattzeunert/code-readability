@@ -1,0 +1,1455 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[JavaScript Code Readability]]></title><description><![CDATA[Understand your own and others' code more easily]]></description><link>http://localhost:8080</link><generator>Ghost 0.11</generator><lastBuildDate>Mon, 15 Jul 2019 11:48:40 GMT</lastBuildDate><atom:link href="http://localhost:8080rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Using a JavaScript library versus building the functionality yourself]]></title><description><![CDATA[<p>Libraries save time by letting developers reuse existing work done by others. Especially for languages like JavaScript, that come with a small standard library, external libraries are essential for building for large applications.</p>
+
+<p>However there are some downsides as well, like unnecessary code and less control over the behavior of</p>]]></description><link>http://localhost:8080javascript-library-vs-building-yourself/</link><guid isPermaLink="false">9bd12391-ffbb-4dbe-8665-2bb101acc2f0</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Mon, 02 Jul 2018 16:28:20 GMT</pubDate><content:encoded><![CDATA[<p>Libraries save time by letting developers reuse existing work done by others. Especially for languages like JavaScript, that come with a small standard library, external libraries are essential for building for large applications.</p>
+
+<p>However there are some downsides as well, like unnecessary code and less control over the behavior of the third-party component.</p>
+
+<p>This post will list the pros and cons of using a library instead of creating a custom solution.</p>
+
+<h2 id="pros">Pros</h2>
+
+<h4 id="savingeffort">Saving effort</h4>
+
+<p>This is the big one. Building functionality takes time, so if someone else already built it just re-using the code makes perfect sense.</p>
+
+<p>Say you need a color picker for your app. You could spend 2 weeks building a custom tool, or you could spend an hour finding a library and learning how to use it. If the color picker isn't absolutely core to the experience of your app then you'll be way better of using an existing one.</p>
+
+<h4 id="increasingquality">Increasing quality</h4>
+
+<p>Not only will using a library be quicker than building it yourself, the end result will probably also be higher quality. The combined efforts of many people exceed the resources available in most cost-conscious companies.</p>
+
+<p>People will already have found and fixed iOS-specific bugs, or discovered a UX problem. If you write the code yourself all the QA work is left for your team to do.</p>
+
+<h4 id="newteammembersmayalreadybefamiliarwiththelibrary">New team members may already be familiar with the library</h4>
+
+<p>If you use a popular library like Lodash or Redux your new team members may already have used it at a previous job and know the library API and best practices for using it.</p>
+
+<p>When you move to a new project or company you can take your library knowledge with you and be more efficient from the get-go.</p>
+
+<h4 id="betterdocumentation">Better documentation</h4>
+
+<p>Unlike internal modules libraries are usually well documented (or at least have some documentation!). You can search through issues people had with the library in the past and find answers on StackOverflow.</p>
+
+<h2 id="cons">Cons</h2>
+
+<h4 id="librariesmaybehardtocustomizeanddebug">Libraries may be hard to customize and debug</h4>
+
+<p>The library you're considering may only be 90% the way you want it and require several tweaks before you can use it. To adjust the library you need to understand the source code, including all the complexity the library was written to handle - even though the complexity wouldn't be needed just for your app!</p>
+
+<p>Reading the code, understanding the build system, and making the adjustments takes a lot of effort! Sometimes writing just the code you need for your use case can be more effective.</p>
+
+<p>Similarly, if you find a bug introduced by a third-party library tracking it down and fixing it can be difficult.</p>
+
+<h4 id="downloadsize">Download size</h4>
+
+<p>If you're writing front-end code every user will have to download the libraries used by your page. Since libraries are meant to be used in a wide variety of projects they will contain a lot of functionality and options that you don't actually need.</p>
+
+<p>However some libraries allow you to limit what you include in your bundle to just what you need. For example, if you write <code>import { filter } from "lodash</code>"  instead of <code>import _ from "lodash"</code> then tree shaking at build time removes all code that's not necessary.</p>
+
+<p>Sometimes you can get the work done by just copying a few lines from Stack Overflow and putting it in a <code>utils.js</code> file.</p>
+
+<h4 id="abstractionmismatch">Abstraction mismatch</h4>
+
+<p>Sometimes libraries can force you to solve a problem in a specific way, which may not be the most obvious for your use case. In that case it can be useful to wrap the library usage and provide a more useful API that's optimized for your needs to the rest of the application.</p>
+
+<p>This especially applies if you are trying to standardize a bunch of existing solutions across your codebase. Building your own interface can make this a lot simpler.</p>
+
+<h4 id="licensingissues">Licensing issues</h4>
+
+<p>While open-source libraries are usually fine to use just because you can download the library for free doesn't mean you can use it commercially.</p>
+
+<p>If you pay for a library there might still be restrictions, for example on how many different domains you can use it.</p>
+
+<p>This might not be a decision you can make directly in the development team and can take a manager's time.</p>
+
+<h4 id="security">Security</h4>
+
+<p>When using external code there's a chance the dependency has security problems. Or a dependency of the dependency has security problems. Or that a version update introduces a security problem.</p>
+
+<p>You can carefully review the library code, or use only libraries by large reliable vendors.</p>
+
+<p>However, you have the greatest control when writing the code yourself. Of course you'll still have to write secure code, but at least the risk of having code that's intended to be insecure is greatly reduced.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>Using lots of libraries is the norm for JavaScript projects. This saves time and creates a shared standard between projects.</p>
+
+<p>When making a decision here are a few questions to consider:</p>
+
+<ul>
+<li>How important is this functionality for your application?</li>
+<li>How close is the library to what you need?</li>
+<li>How accessible is the source code if you ever need to modify it?</li>
+<li>Is the library well tested?</li>
+<li>What libraries does your team have experience with?</li>
+<li>How large are the resources of your project?</li>
+</ul>]]></content:encoded></item><item><title><![CDATA[Automated code formatting with Prettier]]></title><description><![CDATA[<p><a href="https://prettier.io/">Prettier</a> is a tool that automatically makes your code more readable and consistent with your project's <a href="http://www.codereadability.com/why-use-a-style-guide/">style guide</a>.</p>
+
+<p>Prettier integrates with your editor, so your code is tidied up every time you save your changes:</p>
+
+<p><img src="http://localhost:8080content/images/2018/05/OyP2EiZ4Iq.gif" alt="title"></p>
+
+<p>Let's look at two examples:</p>
+
+<pre><code>function sayHi(name){  
+    return 'Result: ' + name
+}
+</code></pre>
+
+<p>Prettier will rewrite</p>]]></description><link>http://localhost:8080automated-code-formatting-with-prettier/</link><guid isPermaLink="false">d5de62d7-0a1a-4e3c-9437-787249288a38</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Thu, 10 May 2018 14:16:36 GMT</pubDate><content:encoded><![CDATA[<p><a href="https://prettier.io/">Prettier</a> is a tool that automatically makes your code more readable and consistent with your project's <a href="http://www.codereadability.com/why-use-a-style-guide/">style guide</a>.</p>
+
+<p>Prettier integrates with your editor, so your code is tidied up every time you save your changes:</p>
+
+<p><img src="http://localhost:8080content/images/2018/05/OyP2EiZ4Iq.gif" alt="title"></p>
+
+<p>Let's look at two examples:</p>
+
+<pre><code>function sayHi(name){  
+    return 'Result: ' + name
+}
+</code></pre>
+
+<p>Prettier will rewrite this as follows.</p>
+
+<pre><code>function sayHi(name) {  
+  return "Result: " + name;
+}
+</code></pre>
+
+<p>Here are the changes Prettier made:</p>
+
+<ul>
+<li>Use <code>"</code> instead of <code>'</code></li>
+<li>Add an extra space before the function body (after the parameter list)</li>
+<li>Add a semicolon at the end of the return statement</li>
+</ul>
+
+<p>I'm using the default configuration here, but you can configure Prettier to prefer single quotes and no semicolons instead.</p>
+
+<p>Another example. We've got a function with a lot of options. (If you've not seen it before, this code uses the ES6 object destructuring syntax).</p>
+
+<pre><code>function init({ option1, option2, option3, option4, option5, option6, option7 }) {  
+  //...
+}
+</code></pre>
+
+<p>But this is slowly becoming difficult to read. Prettier can fix the problem:</p>
+
+<pre><code>function init({  
+  option1,
+  option2,
+  option3,
+  option4,
+  option5,
+  option6,
+  option7
+}) {
+  //...
+}
+</code></pre>
+
+<p>No need to move the cursor and press enter 8 times! And if you realize you don't need <code>option7</code> after all Prettier will instantly revert to the single line format.</p>
+
+<h2 id="benefits">Benefits</h2>
+
+<p>Prettier has had a surprisingly big impact on my productivity and happiness! I miss it every time I work on a project that's not set up with it.</p>
+
+<p>Here's why Prettier is awesome:</p>
+
+<ul>
+<li>No effort spent fixing formatting</li>
+<li>No need to look up rules in a style guide</li>
+<li>No time wasted discussing style in pull requests</li>
+<li>When the style guide changes (or when it is first introduced) Prettier can automatically apply it across the whole code base.</li>
+<li>Code copied from another project or from StackOverflow automatically adjusts</li>
+</ul>
+
+<h2 id="setupwithvisualstudiocode">Setup with Visual Studio Code</h2>
+
+<p>There are Prettier plugins for many different editors available. Here I'll show the setup in <a href="https://code.visualstudio.com/">Visual Studio Code</a>.</p>
+
+<p><strong>1. Install the Prettier VS Code plugin</strong></p>
+
+<p>Open the Command Palette (under the View submenu, or using Cmd+Shift+P on Mac and Ctrl+Shift+P on Windows). Then select "Extensions: Install Extensions".</p>
+
+<p>Search for "Prettier", click "Install", and then "Reload" once the installation is complete.</p>
+
+<p><img src="http://localhost:8080content/images/2018/05/Screen-Shot-2018-05-10-at-15.02.04.png" alt="title"></p>
+
+<p><strong>2. Run Prettier on a file</strong></p>
+
+<p>Now, if you open a JavaScript file and select "Format Document" in the Command Palette Prettier will tidy up your code!</p>
+
+<p><img src="http://localhost:8080content/images/2018/05/Screen-Shot-2018-05-10-at-14.59.13.png" alt="title"></p>
+
+<p><strong>3. Automatically run Prettier when saving a file</strong></p>
+
+<p>Open your workspace settings through the Command Palette. Then enable <code>formatOnSave</code>:</p>
+
+<pre><code>{
+  "folders": [],
+  "settings": {},
+  "editor.formatOnSave": true,
+}
+</code></pre>
+
+<p>Save your settings and now your code should be formatted every time a file is updated!</p>
+
+<p>Prettier also supports languages other than JavaScript, e.g. TypeScript, HTML, CSS, or JSON. However, if you don't want those to be formatted you can control the <code>formatOnSave</code> setting by file type:</p>
+
+<pre><code>{
+  "folders": [],
+  "settings": {},
+  "[javascript]": {
+    "editor.formatOnSave": true
+  }
+}
+</code></pre>
+
+<h2 id="formattingexistingcodewithcommandline">Formatting existing code with command line</h2>
+
+<p>You can format the code for your entire project using the Prettier command line interface (CLI). First install the CLI tool:</p>
+
+<pre><code>npm install prettier --global  
+</code></pre>
+
+<p>Then update your current code:</p>
+
+<pre><code>prettier "*/.ts" --write  
+</code></pre>
+
+<p>Done! One quick warning though: automatically updating your code formatting means you'll make a big commit in source control where a large number of files are updated. That can make it harder to use e.g. <code>git blame</code>, since half the lines in a file may have last been modified in the Prettier commit.</p>]]></content:encoded></item><item><title><![CDATA[Preventing callbacks from accidentally being called twice]]></title><description><![CDATA[<p>Asynchronous calls like this are extremely common in JavaScript:</p>
+
+<pre><code>fetchFile("example.js", function(fileContents){
+    console.log(fileContents)
+})
+</code></pre>
+
+<p>In order to avoid freezing the user interface while the file is loading, <code>fetchFile</code> returns immediately and then when <code>example.js</code> has been loaded the callback is called with the file contents.</p>
+
+<p>Here's</p>]]></description><link>http://localhost:8080preventing-a-callback-from-accidentally-being-called-twice/</link><guid isPermaLink="false">4d2026e9-053f-4f0e-b5e3-25981d584dcf</guid><category><![CDATA[callback]]></category><category><![CDATA[Bugs]]></category><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Sun, 22 Jan 2017 06:50:05 GMT</pubDate><content:encoded><![CDATA[<p>Asynchronous calls like this are extremely common in JavaScript:</p>
+
+<pre><code>fetchFile("example.js", function(fileContents){
+    console.log(fileContents)
+})
+</code></pre>
+
+<p>In order to avoid freezing the user interface while the file is loading, <code>fetchFile</code> returns immediately and then when <code>example.js</code> has been loaded the callback is called with the file contents.</p>
+
+<p>Here's how <code>fetchFile</code> could be implemented:</p>
+
+<pre><code>function fetchFile(url, callback){
+    // Using Fetch API because it's easy, but you could
+    // also make a normal Ajax request
+    fetch(url)
+    .then(r =&gt; r.text())
+    .then(function(text){
+        callback(text)
+   })
+}
+</code></pre>
+
+<p>Let's add some caching, so if we request <code>example.js</code> twice, only one actual network request is made.</p>
+
+<pre><code>var cache = {}
+function fetchFile(url, callback){
+    if (cache[url]){
+        callback(cache[url])
+    }
+
+    fetch(url)
+    .then(r =&gt; r.text())
+    .then(function(text){
+        cache[url] = text
+        callback(text)
+   })
+}
+</code></pre>
+
+<p>Done!</p>
+
+<p>Actually, there's a problem with our code. Can you spot it?</p>
+
+<p>...</p>
+
+<p>When we run the example above, and the <code>url</code> is cached, the callback is actually called twice!</p>
+
+<p>It's easy to think of calling the <code>callback</code> as a kind of asynchronous <code>return</code> statement. But execution continues after it, and the HTTP request to fetch <code>example.js</code> happens as if the file wasn't in the cache.</p>
+
+<p>The fix is simple, make sure we return after calling the callback with the cached value:</p>
+
+<pre><code>    if (cache[url]){
+        callback(cache[url])
+        return
+    }
+</code></pre>
+
+<p>But what can we do to prevent this mistake in the first place? There are two approaches.</p>
+
+<h2 id="useanelsebranchevenifitsnotnecessary">Use an else branch even if it's not necessary</h2>
+
+<p>We could have avoided the whole problem if we had explicitly put the code that makes the HTTP request into an else branch:</p>
+
+<pre><code>function fetchFile(url, callback){
+    if (cache[url]){
+        callback(cache[url])
+        return
+    } else {      
+        fetch(url)
+        .then(r =&gt; r.text())
+        .then(function(text){
+            cache[url] = text
+            callback(text)
+       })
+    }
+}
+</code></pre>
+
+<p>Now the <code>return</code> statement isn't necessary any more and forgetting to put it in has no negative consequences.</p>
+
+<p>Is there anything wrong with having both the <code>else</code> branch and the <code>return</code> statement? I don't think so. The <code>return</code> statement may be redundant and unnecessary, but it doesn't do any harm.</p>
+
+<h2 id="wrapthecallbacksocallingittwicethrowsanerror">Wrap the callback so calling it twice throws an error</h2>
+
+<p>Another option is to keep track of whether the callback has already been called and throw an error if there's an attempt to call it again.</p>
+
+<p>Checking whether the callback has been called before can be done with an <code>onlyAllowOneCall</code> method:</p>
+
+<pre><code>function fetchFile(url, callback){
+      callback = onlyAllowOneCall(callback)
+
+      if (cache[url]){
+          callback(cache[url])
+      }
+
+      // Fetch logic goes here
+}
+
+function onlyAllowOneCall(fn){
+     var hasBeenCalled = false;    
+     return function(){
+          if (hasBeenCalled){
+               throw Error("Attempted to call callback twice")
+          }
+          hasBeenCalled = true;
+          return fn.apply(this, arguments)
+     }
+}
+</code></pre>
+
+<p>If the function has been called before we'll throw an error, otherwise we call the original function <code>fn</code>.</p>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply"><code>fn.apply(this, arguments)</code></a> ensures that our callback is called with the same <code>this</code> value and arguments as the original callback, so <code>onlyAllowOneCall</code> doesn't change the behavior of the callback.</p>
+
+<p>This solution is a bit different from the first one, because it only surfaces the problem rather than fixing it.</p>
+
+<p>We could just ignore any further <code>callback</code> calls after the first one. But then, even if the <code>url</code> is in the cache, the unnecessary HTTP request would still be made.</p>
+
+<p>So, while the functionality of our app won't be affected, ignoring additional calls would hide the cost of unnecessary network requests.</p>]]></content:encoded></item><item><title><![CDATA[Documenting build commands with NPM scripts]]></title><description><![CDATA[<p>In the past, running JavaScript followed a simple model. You wrote some code in file.js and then used a <code>&lt;script&gt;</code> tag to load the file on a page.</p>
+
+<p>However, complex JavaScript projects today require some kind of build process. Languages like TypeScript or ES 2015 may need</p>]]></description><link>http://localhost:8080documenting-build-commands-with-npm-scripts/</link><guid isPermaLink="false">6e252880-3637-426a-be0a-76169bd777ee</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Tue, 20 Dec 2016 09:36:00 GMT</pubDate><content:encoded><![CDATA[<p>In the past, running JavaScript followed a simple model. You wrote some code in file.js and then used a <code>&lt;script&gt;</code> tag to load the file on a page.</p>
+
+<p>However, complex JavaScript projects today require some kind of build process. Languages like TypeScript or ES 2015 may need to be compiled into JavaScript that can run in the browser. Projects can consists of hundreds of JavaScript files, and you need a bundler so you don't have to include a hundred <code>&lt;script&gt;</code> tags in your HTML.</p>
+
+<p>So, before being able to work on a project you may need to run Babel, Webpack and various other tools.</p>
+
+<p>These build steps have made it easier for developers to write large maintainable JavaScript apps. But they also increased the setup required before a developer can start working on a project.</p>
+
+<p>Hopefully, the project you're working on has a readme file that explains the setup process.</p>
+
+<p>Alongside a readme, NPM scripts can be used document the different build commands that are available for a particular project. This post will explain how.</p>
+
+<h2 id="whatarenpmscripts">What are NPM scripts?</h2>
+
+<p><a href="https://www.npmjs.com/">NPM (Node Package manager)</a> is a tool used to install JavaScript libraries. Even though the name contains "Node" it's used on both the frontend and the backend.</p>
+
+<p>Every project that uses NPM contains a package.json file that lists all dependencies that need to be installed.</p>
+
+<p>The first thing to do when setting up a project that uses NPM is to run <code>npm install</code>. This will download all the necessary packages that are needed for the build process.</p>
+
+<p>The package.json file contains not only a list of dependencies but also other information like the author's name and the version of Node required to run the project.</p>
+
+<p>NPM scripts are another thing that's stored in the package.json. They are a set of terminal commands that can be run using <code>npm run [scriptName]</code>.</p>
+
+<p>For example, this is the <a href="https://github.com/facebook/immutable-js/blob/master/package.json"><code>scripts</code> property</a> of <a href="https://facebook.github.io/immutable-js/">ImmutableJS</a>'s package.json file:</p>
+
+<pre><code>"scripts": {
+    "build": "grunt default &amp;&amp; gulp default",
+    "lint": "eslint src/ &amp;&amp; grunt lint &amp;&amp; gulp lint",
+    "testonly": "./resources/node_test.sh",
+    "test": "npm run lint &amp;&amp; npm run testonly &amp;&amp; npm run type-check",
+    "type-check": "cd type-definitions/tests &amp;&amp; flow check",
+    "perf": "node ./resources/bench.js",
+    "start": "npm run build &amp;&amp; node ./pages/resources/start.js",
+    "deploy": "(cd ./pages/out &amp;&amp; git init &amp;&amp; git config user.name \"Travis CI\" &amp;&amp; ..."
+},
+</code></pre>
+
+<p>To compile the project into a single JavaScript file that could be included with a <code>&lt;script&gt;</code> tag you can use <code>npm run build</code>.</p>
+
+<p>In addition to the <code>build</code> script, <code>test</code> is the most common script name you'll encounter (to run automated tests on the code).</p>
+
+<p>Being able to find all available scripts in one place makes it easy to discover the commands you'll need when working on a project.</p>
+
+<p>For example, Immutable has an <code>npm run perf</code> script that runs performance benchmarks.</p>
+
+<p><img src="http://localhost:8080content/images/2016/12/npm-run-perf.png" alt="Immutable JS performance benchmarks in Terminal"></p>
+
+<p>There's also a <code>lint</code> command to run linters that point out code quality issues.</p>
+
+<p>Looking at the available NPM scripts gives you an idea of the tools that a project uses.</p>
+
+<h2 id="advantagesofusingnpmscripts">Advantages of using NPM Scripts</h2>
+
+<p>As we saw, NPM scripts provide a consistent place for JavaScript developers to find what commands are required to build and test a project.</p>
+
+<p>Of course, a readme file can do the same thing. However, a distinct advantage of NPM scripts is that you don't need to memorize long commands. A short script name is enough.</p>
+
+<p>In the ImmutableJS example above this is the <code>lint</code> command:</p>
+
+<pre><code>eslint src/ &amp;&amp; grunt lint &amp;&amp; gulp lint
+</code></pre>
+
+<p>You could put that in your Readme, but most likely any developer would have to regularly look up the command, as it's not straightforward to memorize.</p>
+
+<p>With NPM scripts you can simply run <code>npm run lint</code> and NPM will look up the exact command.</p>
+
+<h3 id="usinglocalmodulesinsteadofrequiringglobalinstallation">Using local modules instead of requiring global installation</h3>
+
+<p>To run <code>eslint src/ &amp;&amp; grunt lint &amp;&amp; gulp lint</code> in the terminal you'll need to have <code>eslint</code>, <code>grunt</code>, and <code>gulp</code> installed globally on your computer.</p>
+
+<p>This means that, in addition to running <code>npm install</code>, you need to separately install all global dependencies of the project.</p>
+
+<p>NPM scripts have access to packages installed locally in your project. That means no global dependencies will need to be installed and a single <code>npm install</code> is enough to be able to run the scripts in package.json and start development.</p>
+
+<h2 id="downsidesofusingnpmscripts">Downsides of using NPM Scripts</h2>
+
+<p>While NPM scripts are very useful there are two limitations that are worth pointing out.</p>
+
+<p>First of all, it's not always clear what each script actually does. You can try to make the script name as descriptive as possible, but in a JSON file it's a lot harder to provide a detailed explanation than it would be in a readme.</p>
+
+<p>However, there are some <a href="http://stackoverflow.com/questions/14221579/how-do-i-add-comments-to-package-json-for-npm-install">workarounds</a> that allow you to include comments in the package.json file.</p>
+
+<p>Also, keep in mind that not everyone is aware of NPM scripts. Make sure to mention the most important NPM commands in the readme (e.g. <code>npm run build</code>). Then point to the <code>scripts</code> property of package.json for more info.</p>]]></content:encoded></item><item><title><![CDATA[How to avoid magic numbers when manipulating strings]]></title><description><![CDATA[<p>String functions like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substr"><code>substr</code></a>, <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/substring"><code>substring</code></a>, or <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/slice"><code>slice</code></a> all take character indices as parameters.</p>
+
+<p>For example, <code>slice</code> returns the characters from the <code>from</code> index to the <code>to</code> index you pass in. Or, if no <code>to</code> index is passed in, it returns all remaining characters starting from the <code>from</code> index.</p>
+
+<pre><code>"Hello World"</code></pre>]]></description><link>http://localhost:8080how-to-avoid-magic-numbers-when-manipulating-strings/</link><guid isPermaLink="false">ded15b30-217e-4337-9c9e-b770281e8bdc</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Wed, 14 Dec 2016 05:59:49 GMT</pubDate><content:encoded><![CDATA[<p>String functions like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substr"><code>substr</code></a>, <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/substring"><code>substring</code></a>, or <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/slice"><code>slice</code></a> all take character indices as parameters.</p>
+
+<p>For example, <code>slice</code> returns the characters from the <code>from</code> index to the <code>to</code> index you pass in. Or, if no <code>to</code> index is passed in, it returns all remaining characters starting from the <code>from</code> index.</p>
+
+<pre><code>"Hello World".slice(0, 5)
+// "Hello"
+"Hello World".slice(6)
+// "World"
+</code></pre>
+
+<p>But, when written this way, it's not always clear what the numbers mean, especially since you'll normally call <code>slice</code> on a variable instead of a string literal. Like this:</p>
+
+<pre><code>greeting.slice(6)
+// "World"    
+</code></pre>
+
+<p>To avoid that, instead of using a number, try to communicate what the number means. For example, to find out who the greeting is saying "Hello" to:</p>
+
+<pre><code>greeting.slice("Hello ".length)
+// "World"
+</code></pre>
+
+<p>By representing the character index as the length of the string before "World" we avoid confusion about why index 6 was chosen.</p>
+
+<p>If our app changes from "Hello " to "Hi ", instead of changing an index from 6 to 3, we can simply edit the string.</p>
+
+<p>While theoretically slower, in practice the extra time spent on the <code>length</code> property lookup is so insignificant that it's not worth sacrificing readability for.</p>
+
+<p>Let's look at a few more examples.</p>
+
+<pre><code>"Hello World!".slice("Hello ".length, -"!".length)
+// "World"
+</code></pre>
+
+<p>Here the thing we're greeting is wrapped between the "Hello " and the exclamation mark, so we use both strings to get the correct indices.</p>
+
+<p>Note the minus sign before the <code>"!"</code>. A negative index for the <code>to</code> parameter tells the <code>slice</code> function to start counting backward from the end of the string.</p>
+
+<pre><code>str = "It's July 20, 2088. Hello World! How are things?"
+</code></pre>
+
+<p>Given this string, how can we figure out who's being greeted? The exact indices we need to use change depending on the date.</p>
+
+<p>We can use the <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf"><code>indexOf</code></a> function to find the correct character indices to use for the slice call.</p>
+
+<pre><code>str.slice(str.indexOf("Hello "), str.indexOf("!"))
+// "Hello World"
+</code></pre>
+
+<p>Now, all we need to do is move the <code>from</code> after the "Hello ":</p>
+
+<pre><code>str.slice(str.indexOf("Hello ") + "Hello ".length, str.indexOf("!"))
+</code></pre>]]></content:encoded></item><item><title><![CDATA[Strategies For Making Sense Of JavaScript Code]]></title><description><![CDATA[<p>It's hard to understand what's going on when you first dive into an unfamiliar codebase. The decisions that were made when writing the code often aren't obvious.</p>
+
+<p>This post will outline a few strategies to help you make sense of unfamiliar code.</p>
+
+<h2 id="watchhowthecodebehavesinpractice">Watch How The Code Behaves In Practice</h2>
+
+<p>A</p>]]></description><link>http://localhost:8080strategies-for-making-sense-of-javascript-code/</link><guid isPermaLink="false">e9ee5998-6f2e-4e0e-9463-7046c0415259</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Tue, 27 Sep 2016 16:50:59 GMT</pubDate><content:encoded><![CDATA[<p>It's hard to understand what's going on when you first dive into an unfamiliar codebase. The decisions that were made when writing the code often aren't obvious.</p>
+
+<p>This post will outline a few strategies to help you make sense of unfamiliar code.</p>
+
+<h2 id="watchhowthecodebehavesinpractice">Watch How The Code Behaves In Practice</h2>
+
+<p>A debugger lets you see the actual variable values at run time. You can run your code line by line, see how values change over time, and find out why specific functions are called.</p>
+
+<p>Stepping through code will give you a more concrete understanding of how your code works in a real scenario.</p>
+
+<p>The debugger also makes it easier to navigate through the codebase. For example, you can right-click on functions in the debugger to find the function definition.</p>
+
+<p>However, to use a debugger you first need to know a page that runs the code that you're interested in. Then you can set a breakpoint in your code and step through it.</p>
+
+<p><img src="http://localhost:8080content/images/2016/09/Screen-Shot-2016-09-27-at-17.33.23.png" alt="Chrome DevTools Debugger"></p>
+
+<h2 id="lookatunitandintegrationtests">Look At Unit And Integration Tests</h2>
+
+<p>If your codebase comes with automated unit or integration tests you're lucky. The tests for the module you're looking at will show you how to use the module.</p>
+
+<p>For example, you can see what kind of values can be passed into a function, and what the expected return value is.</p>
+
+<p>The tests will also give you a high level idea of the purpose of the module, and its capabilities.</p>
+
+<p>If your module has tests they'll be in a test file named something like like <code>module.spec.js</code>, <code>module-test.js</code> or <code>tests/module.js</code>.</p>
+
+<p><img src="http://localhost:8080content/images/2016/09/Screen-Shot-2016-09-27-at-17.52.03.png" alt="Unit test code"></p>
+
+<h2 id="usegithistorytodiscoverthewhy">Use Git History To Discover The "Why"</h2>
+
+<p>Version control software keeps track of code changes. Each change is recorded as a commit, showing the code that changed as well as a message explaining the changes.</p>
+
+<p>To see recent changes made to a particular file look at its revision history. </p>
+
+<p><img src="http://localhost:8080content/images/2016/09/Screen-Shot-2016-09-27-at-17.40.12.png" alt="Git history on Github"></p>
+
+<p>When reading code you'll often run into sections that appear needlessly complicated. Why wasn't a much simpler solution picked instead?</p>
+
+<p>The commit messages can provide an answer. You can use Git or SVN <code>blame</code> to find out when a specific line of code was added, or when it was last modified.</p>
+
+<p><img src="http://localhost:8080content/images/2016/09/Screen-Shot-2016-09-27-at-17.38.42.png" alt="Git blame on Github"></p>
+
+<p>If a line was added to fix a particular bug, <code>blame</code> lets you find the commit for the bug fix.</p>
+
+<p>Hopefully, the commit message will explain the bug, and maybe reference a Github issue or a ticket in a project management tool like Jira. </p>
+
+<p>(When writing your own code, don't make others rely on <code>blame</code>. Add a comment explaining what went wrong in the past and why this particular solution was needed.)</p>
+
+<h2 id="searchthroughyoursourcecode">Search Through Your Source Code</h2>
+
+<p>This is low tech, but it works even when you don't have automated tests or a commit history available.</p>
+
+<p>Search for the function or module name in your editor. That will show where the function or module is used.</p>
+
+<p>Looking at the different usage examples will also give you a better idea of the kind of values your code needs to handle.</p>
+
+<p><img src="http://localhost:8080content/images/2016/09/Screen-Shot-2016-09-27-at-17.41.31.png" alt="Atom Code Search"></p>]]></content:encoded></item><item><title><![CDATA[More Readable Alternatives To Boolean Function Parameters]]></title><description><![CDATA[<p>Boolean function parameters are hard to read. What could <code>true</code> possibly mean here?</p>
+
+<pre><code>settings.createSetting("userAge", true)
+</code></pre>
+
+<p>You need to look up the function definition to understand this code. The second parameter says where the setting should be stored.</p>
+
+<pre><code>createSetting: function(name, storeInLocalStorage) {}
+</code></pre>
+
+<p>What can you do to make this</p>]]></description><link>http://localhost:8080boolean-arguments/</link><guid isPermaLink="false">b625045a-ee80-4754-93de-d788f26ce99b</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Mon, 19 Sep 2016 17:23:15 GMT</pubDate><content:encoded><![CDATA[<p>Boolean function parameters are hard to read. What could <code>true</code> possibly mean here?</p>
+
+<pre><code>settings.createSetting("userAge", true)
+</code></pre>
+
+<p>You need to look up the function definition to understand this code. The second parameter says where the setting should be stored.</p>
+
+<pre><code>createSetting: function(name, storeInLocalStorage) {}
+</code></pre>
+
+<p>What can you do to make this easier to read?</p>
+
+<p>This example is based on the Chrome DevTools source code, where they have <a href="https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/common/Settings.js?rcl=0&amp;l=106">an elegant solution to this problem</a>.</p>
+
+<p>Instead of passing in a boolean parameter they've introduced a new function with a meaningful name. This function then calls through to the original <code>createSetting</code> method.</p>
+
+<pre><code>createLocalSetting: function(name){
+    this.createSetting(name, true)
+}
+</code></pre>
+
+<p>Now, when you read the code that creates the setting, it's clearer what's going on:</p>
+
+<pre><code>settings.createLocalSetting("userAge")
+</code></pre>
+
+<h2 id="usinganoptionsobject">Using An Options Object</h2>
+
+<p><a href="http://www.codereadability.com/what-are-javascript-options-objects/">Options Objects</a> are another way to explain what arguments are passed into a function, and save the reader from looking up the function definition.</p>
+
+<p>Here's what the <code>createSetting</code> call would look like using an options object:</p>
+
+<pre><code>settings.createSetting({
+    name: "userAge",
+    storeInLocalStorage: true
+})
+</code></pre>
+
+<p>As you can see, the downside of options objects is that they make code a bit more verbose.</p>]]></content:encoded></item><item><title><![CDATA[Setting up JSHint with Grunt]]></title><description><![CDATA[<p>JSHint is a popular <a href="http://www.codereadability.com/what-are-javascript-linters/">JavaScript</a> linter that can help detect low-quality code.</p>
+
+<p>It's good to run a linter every time you edit any JavaScript source code. You can automate this with using a tool called <a href="http://gruntjs.com/">Grunt</a>.</p>
+
+<p>This article will take you from installing Grunt to automating the linting process.</p>
+
+<h2 id="installingnodenpm">Installing</h2>]]></description><link>http://localhost:8080jshint-with-grunt/</link><guid isPermaLink="false">5a0632c6-a31e-42ee-8a28-e9dc165aa66a</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Sun, 01 Nov 2015 17:57:58 GMT</pubDate><content:encoded><![CDATA[<p>JSHint is a popular <a href="http://www.codereadability.com/what-are-javascript-linters/">JavaScript</a> linter that can help detect low-quality code.</p>
+
+<p>It's good to run a linter every time you edit any JavaScript source code. You can automate this with using a tool called <a href="http://gruntjs.com/">Grunt</a>.</p>
+
+<p>This article will take you from installing Grunt to automating the linting process.</p>
+
+<h2 id="installingnodenpm">Installing Node / NPM</h2>
+
+<p>The tools we are going to use are all written in JavaScript. To run them we need to install a JavaScript runtime called Node.</p>
+
+<p>Follow the instructions on the <a href="https://docs.npmjs.com/getting-started/installing-node">installation page</a>. Installing Node will also automatically install NPM, the Node Package Manager.</p>
+
+<h2 id="initializingannpmpackagejsonfile">Initializing an NPM package.json file</h2>
+
+<p>NPM allows us to install Node packages like Grunt or JSHint. There's a <a href="https://docs.npmjs.com/getting-started/what-is-npm">video on the NPM website explaining what NPM does</a>.</p>
+
+<p><center>  </center></p>
+
+<iframe width="420" height="315" src="https://www.youtube.com/embed/pa4dc480Apo" frameborder="0" allowfullscreen></iframe>  
+
+<p></p>
+
+<p>Like Grunt and JSHint, your own code is also going to be a package. So to get started we need to initialize our package by running this command in the directory that our code is in:</p>
+
+<pre><code>npm init
+</code></pre>
+
+<p>NPM will then ask you a series of questions. The exact answers you give aren't really important, since you're not going to make your package public.</p>
+
+<p>This seems like a lot of work to lint some code, doesn't it!</p>
+
+<p>The reason we use NPM is that, once it's set up, we can easily add new steps to our development process. In addition to linting we might want to <a href="http://www.hanselman.com/blog/TheImportanceAndEaseOfMinifyingYourCSSAndJavaScriptAndOptimizingPNGsForYourBlogOrWebsite.aspx">minify our code</a> or check that it follows our <a href="http://www.codereadability.com/why-use-a-style-guide/">style guide</a>.</p>
+
+<p>After running <code>npm init</code> you should have a file called <code>package.json</code> in your directory.</p>
+
+<h2 id="installinggrunt">Installing Grunt</h2>
+
+<p>To install Grunt run</p>
+
+<pre><code>npm install grunt --save-dev
+</code></pre>
+
+<p>This will download Grunt into a folder called <code>node_modules</code>.</p>
+
+<p>In your package.json you'll find a new section called <code>devDependencies</code>:</p>
+
+<pre><code>"devDependencies": {
+    "grunt": "^0.4.5"
+}
+</code></pre>
+
+<p>By adding <code>--save-dev</code> to our <code>npm install</code> command, we can keep track of the Node packages we've installed. Then, instead of storing the packages in source control like a Git or SVN repository, we can run <code>npm install</code> to download all the dependencies we need.</p>
+
+<p>Grunt also has a command line interface (CLI) that needs to be installed globally (using the <code>-g</code> flag):</p>
+
+<pre><code>npm install grunt-cli -g
+</code></pre>
+
+<p>You can now run Grunt!</p>
+
+<pre><code>grunt
+</code></pre>
+
+<p>Since we haven't configured it Grunt will show an error message:</p>
+
+<blockquote>
+  <p>A valid Gruntfile could not be found. Please see the getting started guide for
+  more information on how to configure grunt: <a href="http://gruntjs.com/getting-started">http://gruntjs.com/getting-started</a> <br>
+  Fatal error: Unable to find Gruntfile.</p>
+</blockquote>
+
+<h2 id="creatingagruntfile">Creating a Gruntfile</h2>
+
+<p>Create a new empty JavaScript file called <code>Gruntfile.js</code> in the same directory as your <code>package.json</code> file.</p>
+
+<p>Now running <code>grunt</code> will give you a different error:</p>
+
+<blockquote>
+  <p>Warning: Task "default" not found. Use --force to continue.</p>
+  
+  <p>Aborted due to warnings.</p>
+</blockquote>
+
+<p>Instead of <code>default</code> our task will be called <code>jshint</code>. So we'll be using</p>
+
+<pre><code>grunt jshint
+</code></pre>
+
+<p>to run the task.</p>
+
+<h2 id="installingandconfiguringjshint">Installing and configuring JSHint</h2>
+
+<p>Now Grunt still isn't able to find a task called <code>jshint</code>. We first need to install JSHint and configure it.</p>
+
+<p>First we install the JSHint Grunt plugin: </p>
+
+<pre><code>npm install grunt-contrib-jshint --save-dev
+</code></pre>
+
+<p>Then we can load the JSHint package by putting this code into our <code>Gruntfile.js</code>:</p>
+
+<pre><code>module.exports = function(grunt) {
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+};
+</code></pre>
+
+<p>Now running <code>grunt jshint</code> will find the task, but show a different error message:</p>
+
+<blockquote>
+  <p>&gt;&gt; No "jshint" targets found.
+  Warning: Task "jshint" failed. Use --force to continue.</p>
+  
+  <p>Aborted due to warnings.</p>
+</blockquote>
+
+<p>We've installed Grunt correctly, but it still doesn't know which JavaScript files we want to lint.</p>
+
+<p>To lint the correct files we need to add a configuration object to the Gruntfile:</p>
+
+<pre><code>module.exports = function(grunt) {
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.initConfig({
+        jshint: {
+            all: ['Gruntfile.js']
+        }
+    });
+}
+</code></pre>
+
+<p>We pass the configuration object into the <code>grunt.initConfig</code> function. In the object we specify the task that we want to configure (jshint).</p>
+
+<p>In this case, we want to configure JSHint to lint the <code>Gruntfile.js</code> file.</p>
+
+<p>Now running <code>grunt jshint</code> correctly lints our file:</p>
+
+<blockquote>
+  <p>Running "jshint:all" (jshint) task</p>
+
+<pre><code>Gruntfile.js
+  8 |}
+      ^ Missing semicolon.
+</code></pre>
+  
+  <p>&gt; &gt; 1 error in 1 file <br>
+  Warning: Task "jshint:all" failed. Use --force to continue.</p>
+  
+  <p>Aborted due to warnings.</p>
+</blockquote>
+
+<p>You can see that the <code>module.exports = function(){...}</code> assignment doesn't end on a semicolon. Let's fix that and run <code>grunt jshint</code> again:</p>
+
+<blockquote>
+  <p>Running "jshint:all" (jshint) task
+  &gt;&gt; 1 file lint free.</p>
+  
+  <p>Done, without errors.</p>
+</blockquote>
+
+<p>Now JSHint no longer complains about our code.</p>
+
+<h2 id="runningjshintonmultiplefilesatonce">Running JSHint on multiple files at once</h2>
+
+<p>The file paths that we pass into Grunt supports several <a href="http://gruntjs.com/configuring-tasks">globbing patterns</a>. <code>**</code> and <code>*</code> are two of them.</p>
+
+<p>For example, if your application code is inside a folder called <code>app</code> this would be the correct configuration:</p>
+
+<pre><code>jshint: {
+    all: ['Gruntfile.js', 'app/**/*.js']
+}
+</code></pre>
+
+<p><code>**</code> matches any file or directory, including nested directories.</p>
+
+<p><code>*.js</code> matches all files whose names end on <code>.js</code>.</p>
+
+<p>Together, <code>app/**/*.js</code> will match all JavaScript files inside the <code>app</code> directory or any of its sub-directories.</p>
+
+<p>Running <code>grunt jshint</code> will now lint all of those files and <code>Gruntfile.js</code>.</p>
+
+<h2 id="automaticallylintingfileswhentheychange">Automatically linting files when they change</h2>
+
+<p>To do this we need to install a Grunt plugin called <code>watch</code> that detects when a file has been updated:</p>
+
+<pre><code>npm install grunt-contrib-watch --save-dev
+</code></pre>
+
+<p>Then we configure the <code>watch</code> task in <code>Gruntfile.js</code>:</p>
+
+<pre><code>grunt.initConfig({
+    jshint: {
+        all: ['Gruntfile.js']
+    },
+    watch: {
+        files: ['Gruntfile.js'],
+        tasks: ['jshint']
+    }
+});
+</code></pre>
+
+<p>If any code in our <code>files</code> changes we want to run the <code>jshint</code> task. That's equivalent to running <code>grunt jshint</code>.</p>
+
+<p>You can use file name globbing in the same way as in the JSHint Grunt task.</p>
+
+<p>Run the <code>watch</code> task and then edit and save your Gruntfile:</p>
+
+<pre><code>grunt watch
+</code></pre>
+
+<p>Every time you save the file you should now see <code>jshint</code> task running in the console.</p>]]></content:encoded></item><item><title><![CDATA[What are JavaScript linters?]]></title><description><![CDATA[<p>Code linting is a way to increase code quality.</p>
+
+<p>Linters like <a href="http://www.jslint.com/">JSLint</a> or <a href="http://jshint.com/">JSHint</a> can detect potential bugs, as well as code that is difficult to maintain.</p>
+
+<p>Since linters are automated tools running them doesn't require manual work once they've been set up.</p>
+
+<h2 id="jslintexample">JSLint Example</h2>
+
+<p>Let's run this code through</p>]]></description><link>http://localhost:8080what-are-javascript-linters/</link><guid isPermaLink="false">bbe65469-eb47-442a-96e9-4e03f260e023</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Sun, 01 Nov 2015 12:33:41 GMT</pubDate><content:encoded><![CDATA[<p>Code linting is a way to increase code quality.</p>
+
+<p>Linters like <a href="http://www.jslint.com/">JSLint</a> or <a href="http://jshint.com/">JSHint</a> can detect potential bugs, as well as code that is difficult to maintain.</p>
+
+<p>Since linters are automated tools running them doesn't require manual work once they've been set up.</p>
+
+<h2 id="jslintexample">JSLint Example</h2>
+
+<p>Let's run this code through JSLint and see what problems it can detect.</p>
+
+<pre><code>function sayHello(name){
+    alert("Hello " + name);
+}
+
+name = "Douglas Crockford";
+sayHello(name)
+</code></pre>
+
+<p>JSLint analyzes the code and reports a list of potential code quality concerns.</p>
+
+<blockquote>
+  <p>1) Expected one space between ')' and '{'. <br>
+  <code>function sayHello(name){</code></p>
+  
+  <p>2) Expected 'use strict' before 'alert'. <br>
+  <code>alert("Hello " + name);</code>  </p>
+  
+  <p>3) Undeclared 'name'. <br>
+  <code>name = "Douglas Crockford";</code>  </p>
+  
+  <p>4) Undeclared 'name'. <br>
+  <code>sayHello(name)</code>  </p>
+  
+  <p>5) Expected ';' and instead saw '(end)'. <br>
+  <code>sayHello(name)</code></p>
+</blockquote>
+
+<p>We'll go through the list and see what each warning means.</p>
+
+<h3 id="expectedonespacebetweenand">Expected one space between ')' and '{'</h3>
+
+<p>The first warning is a simple <a href="http://www.codereadability.com/why-use-a-style-guide/">code style</a> issue. JSLint expects a space after a function declaration's argument list. Like this:</p>
+
+<pre><code>function sayHello(name) { ... }
+</code></pre>
+
+<p>This isn't a serious issue at all and even JSLint's author Douglas Crockford points out that <a href="http://www.jslint.com/help.html">"JSLint will hurt your feelings"</a>.</p>
+
+<p>JSHint is a much more lenient alternative to JSLint and won't complain about stylistic decisions. </p>
+
+<h3 id="expectedusestrictbeforealert">Expected 'use strict' before 'alert'.</h3>
+
+<p>The second JSLint warning is about a missing "use strict" statement.</p>
+
+<p>"use strict" is used to initiate <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">JavaScript Strict Mode</a>. It prevents the use of certain JavaScript behaviors that are confusing and likely to introduce bugs.</p>
+
+<p>For example, you might assume that the value <code>011</code> is the same as <code>11</code>. But actually, the leading zero means that the number is interpreted as octal rather than decimal. Therefore, <code>011</code> is actually equal to <code>9</code>.</p>
+
+<p>In Strict Mode, the JavaScript runtime will throw a syntax error when it sees the value <code>011</code>: "Octal literals are not allowed in strict mode."</p>
+
+<p>You can use the "use strict" statement like this:</p>
+
+<pre><code>function sayHello(name){
+    "use strict";
+    // ...
+}
+</code></pre>
+
+<p>Many developers don't know that Strict Mode exists, so JSLint educates developers that they can use it to avoid common JavaScript pitfalls.</p>
+
+<h2 id="undeclaredname">Undeclared 'name'</h2>
+
+<p>When executing the assignment <code>name = "Douglas Crockford"</code> JavaScript will create a global variable called <code>name</code>. That's because we didn't declare a local <code>name</code> variable, so JavaScript defaults to the global scope.</p>
+
+<p>We usually don't want to create a global variable implicitly. Instead, we would make it clear that we are accessing global scope by writing <code>window.name = '...'</code>.</p>
+
+<p>The problem with unintentionally creating a global variable is that we could accidentally overwrite an existing global value. Likewise, the value we store in our variable might be overwritten by other parts of the code.</p>
+
+<p>JSLint will alert you to any unintended global variables you create.</p>
+
+<h2 id="expectedandinsteadsawend">Expected ';' and instead saw '(end)'</h2>
+
+<p>Many programming languages require semicolons at the end of each statement to separate the different instructions in the code. In JavaScript, however, these semicolons are optional.</p>
+
+<p>While semicolons aren't required in JavaScript, there are some situations where <a href="http://stackoverflow.com/a/1169596/1290545">their absence can create ambiguity and introduce bugs</a>.</p>
+
+<p>Because of this JSLint recommends that you always put a semicolon at the end of each statement.</p>
+
+<h2 id="benefitsoflintingjavascriptcode">Benefits of linting JavaScript code</h2>
+
+<p>As you can see in the example above, linters detect common programming errors and ensure that certain best practices are followed. Using them allows you to avoid some of JavaScript's confusing language features.</p>
+
+<p>As a result, linted code is likely to contain fewer bugs.</p>
+
+<p>Detecting these simple errors before a manual code review also makes reviewing the code more effective since the reviewer can focus on more complex issues.</p>
+
+<h2 id="howlinterswork">How Linters work</h2>
+
+<p>JavaScript linters parse and inspect source code, and then analyze the code's syntax and structure.</p>
+
+<p>If any code violates the rules defined by the linter a warning is shown. The warning explains what part of the code might lead to unexpected behavior and why.</p>
+
+<p>If you have trouble understanding a specific JSLint warning <a href="https://jslinterrors.com/">the JSLintErrors website</a> explains what they mean.</p>
+
+<h2 id="settinguplintingforyourproject">Setting up linting for your project</h2>
+
+<p>The easiest way to lint a bit of code is by using the online versions of <a href="http://www.jslint.com/">JSLint</a>, <a href="http://jshint.com/">JSHint</a> or <a href="http://eslint.org/demo/">ESLint</a>. You can just paste your source code and the tools will lint the code for you.</p>
+
+<p>However, this isn't convenient for anything but very small projects. For larger projects, you want to regularly and automatically lint all JavaScript files in the project.</p>
+
+<p>The best way to achieve that is using a task runner like <a href="http://gruntjs.com/">Grunt</a> or Gulp. You can set them up to run the linter every time you make a change to your source code.</p>
+
+<p>Read this post to find out how to <a href="http://www.codereadability.com/jshint-with-grunt/">set up JSHint with Grunt</a>.</p>]]></content:encoded></item><item><title><![CDATA[Don't use short-circuiting when you want an if statement]]></title><description><![CDATA[<p>Evaluation short-circuiting is a feature of the logical operators <code>AND</code> and <code>OR</code>. It is meant to speed up code execution, but sometimes it's misused to simulate if statements.</p>
+
+<p>This article shows how it works and when using it is a bad idea.</p>
+
+<h2 id="whatisevaluationshortcircuiting">What is evaluation short circuiting?</h2>
+
+<p>Usually, the <code>&amp;</code></p>]]></description><link>http://localhost:8080dont-use-short-circuiting-when-you-want-an-if-statement/</link><guid isPermaLink="false">e05be108-6a06-414c-b391-d1cdd86d1713</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Mon, 12 Oct 2015 20:06:09 GMT</pubDate><content:encoded><![CDATA[<p>Evaluation short-circuiting is a feature of the logical operators <code>AND</code> and <code>OR</code>. It is meant to speed up code execution, but sometimes it's misused to simulate if statements.</p>
+
+<p>This article shows how it works and when using it is a bad idea.</p>
+
+<h2 id="whatisevaluationshortcircuiting">What is evaluation short circuiting?</h2>
+
+<p>Usually, the <code>&amp;&amp;</code> operator is used with two expressions that evaluate to a boolean value. Such an expression could be  <code>x === 5</code> or a function call like <code>isUserLoggedIn()</code>.</p>
+
+<p>We can have an AND operator with two expressions like this:</p>
+
+<pre><code>functionThatReturnsFalse() &amp;&amp; functionThatReturnsTrue()
+</code></pre>
+
+<p>Then, after running the first function and obtaining <code>false</code> as the result, there's no point in also calling <code>functionThatReturnsTrue</code>. Whatever the second value for the <code>&amp;&amp;</code> operator is, we know that at least one operand is <code>false</code>.</p>
+
+<p>Our expression evaluates to <code>false &amp;&amp; ANYTHING</code>, which will always evaluate to <code>false</code>, regardless of what <code>ANYTHING</code> is.</p>
+
+<p>When JavaScript stops evaluating the operands of the AND operator, that's called short-circuiting.</p>
+
+<h2 id="theantipattern">The Anti-Pattern</h2>
+
+<p>Short-circuiting is a useful behavior to avoid unnecessary computations. However, it can be misused to create the same behavior as an if statement.</p>
+
+<p>Take this example:</p>
+
+<pre><code>hasUserId &amp;&amp; logUserIn();
+</code></pre>
+
+<p>It's equivalent to this if statement:</p>
+
+<pre><code>if (hasUserId) {
+    logUserIn();
+}
+</code></pre>
+
+<p>This works because both bits of code evaluate the <code>logUserIn</code> part of the code only if <code>hasUserId</code> is true.</p>
+
+<p>However, unlike an if statement, the AND operator doesn't communicate a conditional operation to the developer who's reading the code.</p>
+
+<p>This technique is often used with non-boolean values. This makes it easier to work with values that might be <code>undefined</code>.</p>
+
+<p>Here are two common examples:</p>
+
+<pre><code>callback &amp;&amp; callback();
+console.log &amp;&amp; console.log();
+</code></pre>
+
+<p>In the first case, the <code>callback</code> function is only run when it has been assigned a value. If we called <code>callback()</code> without this check and its value was <code>undefined</code> we would get an error message:</p>
+
+<blockquote>
+  <p>Uncaught ReferenceError: callback is not defined</p>
+</blockquote>
+
+<p>But with short-circuiting, execution can skip the instruction if no callback has been set.</p>
+
+<p>The second example works in a similar way. Some browsers don't implement a debugging console. Attempting to call <code>console.log</code> in these browsers would throw a <code>ReferenceError</code>.</p>
+
+<p>However, <code>console &amp;&amp; console.log()</code> won't attempt to call the <code>log</code> method if <code>console</code> is <a href="http://www.sitepoint.com/javascript-truthy-falsy/">falsy</a>.</p>
+
+<h2 id="whyusingshortcircuitinginsteadofanifstatementisanantipattern">Why using short-circuiting instead of an if statement is an anti-pattern</h2>
+
+<p>Using short-circuiting makes code difficult to read. An if statement clearly communicates that the code should only be run if a condition is fulfilled. But using a logical operator for the same purpose is just confusing.</p>
+
+<p>This problem is made worse by how difficult it is to Google for this behavior. Because it's not the expected use of the AND operator it's hard to find a page explaining how short-circuiting can create <code>if</code>-like behavior.</p>
+
+<p>Using this behavior can appeal to developers because of its brevity and <a href="http://programmers.stackexchange.com/questions/91854/how-to-train-yourself-to-avoid-writing-clever-code">cleverness</a>, but it makes the code more difficult to work with.</p>
+
+<p>Use an if statement for conditional execution.</p>
+
+<h2 id="detectinguseoftheantipatternwithjshintorjslint">Detecting use of the anti-pattern with jsHint or jsLint</h2>
+
+<p>Linters like <a href="http://jshint.com/">jsHint</a> or <a href="http://www.jslint.com/">jsLint</a> help detect common errors and anti-patterns.</p>
+
+<p>The <code>console.log</code> example from above would cause this error message to appear:</p>
+
+<p><img src="http://localhost:8080content/images/2015/10/js-lint-unexpected-expression-and-in-statement-position.png" alt="Short-circuiting jsLint and jsHint"></p>
+
+<h2 id="shortcircuitingwiththeoroperator">Short-circuiting with the OR Operator</h2>
+
+<p>I've previously written about how the <code>||</code> operator is sometimes <a href="http://www.codereadability.com/javascript-default-parameters-with-or-operator/">used to set default values for function parameters</a>, and why this can lead to errors.</p>]]></content:encoded></item><item><title><![CDATA[Magic Numbers in CSS]]></title><description><![CDATA[<p>Magic numbers are numbers that appear in source code without any explanation of what they mean. This makes the code difficult to understand and maintain.</p>
+
+<p>In CSS, it's harder to tell if a value is a magic number than in other languages. This is mostly because there are more numbers</p>]]></description><link>http://localhost:8080magic-numbers-in-css/</link><guid isPermaLink="false">09e3b02d-1d7d-4756-a8f4-4ae395030ea4</guid><category><![CDATA[CSS]]></category><category><![CDATA[Magic Numbers]]></category><category><![CDATA[Giving Things A Name]]></category><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Wed, 07 Oct 2015 18:37:39 GMT</pubDate><content:encoded><![CDATA[<p>Magic numbers are numbers that appear in source code without any explanation of what they mean. This makes the code difficult to understand and maintain.</p>
+
+<p>In CSS, it's harder to tell if a value is a magic number than in other languages. This is mostly because there are more numbers that don't require additional explanation.</p>
+
+<h2 id="refactoringcsstoremovemagicnumbers">Refactoring CSS to remove magic numbers</h2>
+
+<p>Let's look at this example design.</p>
+
+<p><img src="http://localhost:8080content/images/2015/10/magic-numbers-example-layout.png" alt="Box design implemented using Magic Numbers"></p>
+
+<p>The layout contains two elements: an outer box with the class <code>summary</code> and a blue button with the class <code>expand</code>.</p>
+
+<p>We can implement the design with <a href="http://plnkr.co/edit/KVSwek4tLPdCrQEhGK5R?p=preview">this CSS code</a>:</p>
+
+<pre><code>.summary {
+    position: relative;
+    height: 200px;
+    width: 550px;
+
+    padding: 40px;
+    padding-right: 140px;
+}
+
+.summary .expand {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 110px;
+    right: 40px;
+}
+</code></pre>
+
+<p>(The snippet only includes the layout styling, not colors or fonts.)</p>
+
+<p>The design is based on a 40px padding around each element. But why is <code>padding-right</code> 140px and <code>top</code> 110px? These are both magic numbers that have an explanation that isn't included in the code.</p>
+
+<p>If you wanted to increase the padding to 50px, you wouldn't immediately know how to update these two numbers.</p>
+
+<h2 id="explainingpaddingright">Explaining padding-right</h2>
+
+<p>Two sizes are relevant for our layout: the 40px padding and the size of the expand box (60px).</p>
+
+<p>To get rid of the magic numbers, we need to expose the relationship between these values in our code.</p>
+
+<p><img src="http://localhost:8080content/images/2015/10/css-layout-padding-right.png" alt="Layout image showing how the padding-right value is composed"></p>
+
+<p>In modern browsers we can use the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/calc">CSS calc function</a> to calculate the value:</p>
+
+<pre><code>padding-right: calc(40px + 60px + 40px);
+</code></pre>
+
+<p>Or we can use <a href="http://sass-lang.com/">Sass</a> to run the calculation when we generate the CSS file:</p>
+
+<pre><code>padding-right: 40px + 60px + 40px;
+</code></pre>
+
+<p>The code now makes it clear what the role of the two sizes is in deciding what the <code>padding-right</code> value should be.</p>
+
+<p>We can use Sass variables to further explain the relationship between the different layout sizes (<a href="http://plnkr.co/edit/1d3TeDaNOwAt1KVzWZ4d?p=preview">try it here</a>).</p>
+
+<pre><code>$padding: 40px;
+$buttonSize: 60px;
+
+.summary {
+    position: relative;
+    height: 200px;
+    width: 550px;
+
+    padding: $padding;
+    padding-right: $padding + $buttonSize + $padding;
+}
+.summary .expand {
+    position: absolute;
+    width: $buttonSize;
+    height: $buttonSize;
+    top: 110px;
+    right: $padding;
+}
+</code></pre>
+
+<p>Giving names to the values also makes it easier to change the sizes in the future.</p>
+
+<h2 id="explainingthetopvalue">Explaining the top value</h2>
+
+<p>The calculation for the <code>top</code> property of the button looks like this:</p>
+
+<pre><code>top: (200px + 2 * $padding - $buttonSize)/2;
+</code></pre>
+
+<p>We can refactor it for increased readability by introducing a few more variables:</p>
+
+<pre><code>$contentHeight: 200px;
+$boxHeight: $contentHeight + 2 * $padding;
+
+// ... 
+.summary .expand {
+    top: ($boxHeight - $buttonSize)/2;
+}
+</code></pre>
+
+<p>By subtracting the button height from the box height, we calculate the amount of vertical whitespace in the box. Dividing that by two means we have an equal amount of space below the button and above the button. In other words, the button is now beautifully centered.</p>
+
+<h3 id="whyisntthewidthamagicnumber">Why isn't the width a magic number?</h3>
+
+<p>The CSS sets the width of the box to 550px. Why don't we need to refactor this by moving the number into a variable?</p>
+
+<p>In this case, the variable name would be something like <code>$contentWidth</code>. But that doesn't tell us anything that <code>width: 550px</code> doesn't already tell us.</p>
+
+<p>It's actually the same situation with <code>$contentHeight</code>. It's only worth putting in a variable because we re-use the value to calculate the <code>top</code> property.</p>
+
+<p>Many values in CSS are self-explaining. Only create a variable if it adds new information or to <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">avoid repetition</a>.</p>
+
+<h2 id="whattodowhenfindinganumberbytrialanderror">What to do when finding a number by trial and error</h2>
+
+<p>Sometimes you'll determine a value purely by trial and error, maybe when checking that two elements align.</p>
+
+<p>In those cases, you can't replace the magic number with a calculation or variable name, because you don't know how to calculate it.</p>
+
+<p>When you can't avoid introducing a magic number you should use comments to explain the process you used to determine the value.</p>
+
+<p>Write that you found the value by trial and error and describe what the success condition was. For example, a success condition might be that the top of box A aligns with the bottom of box B.</p>]]></content:encoded></item><item><title><![CDATA[Emotional Attachment to Code]]></title><description><![CDATA[<p>A few years ago, I was working on a front-end project for a client.</p>
+
+<p>I was running into a performance problem. An event was being triggered too often, and my code ran an expensive calculation every time.</p>
+
+<p>So I spent a few hours writing a utility method that prevents a</p>]]></description><link>http://localhost:8080emotional-attachment-to-code/</link><guid isPermaLink="false">1848b6ca-03f8-49d2-8b2d-98b92a04b517</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Wed, 30 Sep 2015 20:12:00 GMT</pubDate><content:encoded><![CDATA[<p>A few years ago, I was working on a front-end project for a client.</p>
+
+<p>I was running into a performance problem. An event was being triggered too often, and my code ran an expensive calculation every time.</p>
+
+<p>So I spent a few hours writing a utility method that prevents a function from being called more than once in specified amount of time.</p>
+
+<p>I was happy with my solution. Until the next day, when I found out that I had built my own inferior implementation of Underscore's <a href="http://underscorejs.org/#throttle"><code>_.throttle</code></a> method.</p>
+
+<p>Using <code>throttle</code> instead of a custom function has lots of advantages:</p>
+
+<ul>
+<li><code>_.throttle</code> is well-tested and known not to be buggy</li>
+<li>Other developers already know how to use <code>_.throttle</code></li>
+<li>(Less code to download. I wouldn't <a href="http://www.codereadability.com/why-you-dont-have-to-worry-about-the-file-size-of-your-code/">worry about this too much</a>.)</li>
+</ul>
+
+<p>Clearly using <code>_.throttle</code> is the better solution.</p>
+
+<p>But I didn't change my code to use it.</p>
+
+<p>I liked my code. I had put in a lot of effort to solve the problem in a re-usable way. Plus it signaled to the client that I had actually done some work.</p>
+
+<p>It's natural to become attached to something you've made.</p>
+
+<p>Throwing out code means admitting that you've spent your time making something useless. It's a classic example of a <a href="https://en.wikipedia.org/wiki/Sunk_costs">sunk cost</a> skewing your decisions.</p>
+
+<p>But more code means more complexity which makes it harder to maintain the codebase. When you become aware of a simpler solution, think about whether you can justify keeping the code that you've already written.</p>
+
+<p>Emotional attachment to code leads to bad decision making. Recognize when it influences your decisions and re-examine the choice you've made.</p>]]></content:encoded></item><item><title><![CDATA[When is two a magic number?]]></title><description><![CDATA[<p>A magic number is a number that appears directly in source code, but should really be given a name and used as a variable. The aim of this refactoring step is to improve readability.</p>
+
+<p>Sometimes it can be difficult to decide whether a number is worth giving a name to.</p>]]></description><link>http://localhost:8080is-two-a-magic-number-in-programming/</link><guid isPermaLink="false">1f874884-fc7f-416e-baa6-c8145654d664</guid><category><![CDATA[Giving Things A Name]]></category><category><![CDATA[Magic Numbers]]></category><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Tue, 29 Sep 2015 07:48:25 GMT</pubDate><content:encoded><![CDATA[<p>A magic number is a number that appears directly in source code, but should really be given a name and used as a variable. The aim of this refactoring step is to improve readability.</p>
+
+<p>Sometimes it can be difficult to decide whether a number is worth giving a name to. Especially the meaning of values like -1, 0, 1 or 2 is often already apparent from the context.</p>
+
+<p>Below you can find a few example scenarios and how they should be handled.</p>
+
+<h2 id="example1checkingforevennumbers">Example 1: checking for even numbers</h2>
+
+<p>The modulo operator <code>%</code> can be used to find the remainder in a division. So, for example <code>5 % 3</code> is 2, and <code>13 % 5</code> is 3.</p>
+
+<p>To check whether a number is even, you can use the modulo operator to divide by two. <code>3 % 2</code> is 1, so 3 is an odd number. <code>4 % 2</code> is 0, so 4 is an even number.</p>
+
+<p>Therefore, an <code>isEven</code> function could look like this:</p>
+
+<pre><code>function isEven(number){
+    return number % 2 === 0;
+}
+</code></pre>
+
+<p>Should 2 be considered a magic number in this case? What about 0?</p>
+
+<p>I think that using 2 directly is acceptable here. The <code>isEven</code> function is very short, and its name gives a good indication of what happens inside the function.</p>
+
+<p>Likewise, if you understand how the modulo operator works, it's clear why we compare to 0.</p>
+
+<h2 id="example2insideanobject">Example 2: inside an object</h2>
+
+<p>What about the two in this code snippet?</p>
+
+<pre><code>var category = {
+    name: "T-shirts",
+    id: 2
+}
+</code></pre>
+
+<p>Since the value is used together with a property name (<code>id</code>) that already conveys what the 2 stands for.</p>
+
+<h2 id="example3codevalues">Example 3: code values</h2>
+
+<p>Do you understand what's happening in this code?</p>
+
+<pre><code>person.gender = 2;
+</code></pre>
+
+<p>Here, using the value 2 directly is very confusing.</p>
+
+<p>Creating a list of available genders and their matching numeric code makes the code much easier to understand:</p>
+
+<pre><code>var GENDERS = {
+    male: 1,
+    female: 2
+}
+person.gender = GENDERS.female;
+</code></pre>
+
+<h2 id="example4calculatingavalueeg28">Example 4: calculating a value (e.g. 2^8)</h2>
+
+<p>How should the expression <code>Math.pow(2, 8)</code> be handled?</p>
+
+<p>Here it's important to assign the result of the calculation to a variable to show what it stands for. For example, you could write:</p>
+
+<pre><code>var POSSIBLE_VALUES_IN_ONE_BYTE = Math.pow(2, 8);
+</code></pre>
+
+<p>Or, you could further explain the calculation:</p>
+
+<pre><code>var POSSIBLE_VALUES_PER_BIT = 2;
+var BITS_PER_BYTE = 8;
+var POSSIBLE_VALUES_IN_ONE_BYTE = 
+    Math.pow(POSSIBLE_VALUES_PER_BIT, BITS_PER_BYTE);
+</code></pre>
+
+<p>While the second example isn't wrong or unreadable it is more verbose than necessary.</p>
+
+<p>The majority of developers will understand and prefer the short one-line version.</p>
+
+<p>For this particular example, it's also not very important to maintain the original calculation. The number of values that can be represented in one byte isn't going to change in the future. Hard-coding the value <code>256</code> instead of writing <code>Math.pow(2,8)</code> would be perfectly acceptable, possibly even better.</p>
+
+<h2 id="example5usingtwoasamultiplierforavalue">Example 5: using two as a multiplier for a value</h2>
+
+<p>In this example a first class ticket costs twice as much as a regular ticket:</p>
+
+<pre><code>if (ticket.isFirstClass) {
+     price *= 2;
+}
+</code></pre>
+
+<p>There's no technical reason why the multiplier should be 2. The company could decide that first class tickets should only be 10% more expensive, or that they should cost 5 times as much as standard tickets.</p>
+
+<p>The 2 is a magic number and the code needs to be refactored.</p>
+
+<pre><code>var FIRST_CLASS_PRICE_MULTIPLE = 2;
+if (ticket.isFirstClass) {
+     price *= FIRST_CLASS_PRICE_MULTIPLE;
+}
+</code></pre>
+
+<p>By introducing a new variable, we can communicate the meaning the value <code>2</code>. We could also re-use the variable elsewhere in the code.</p>
+
+<h2 id="finalnotedontcreateaconstantcalledtwo">Final note: don't create a constant called TWO</h2>
+
+<p>The reason for introducing a new variable or constant is to add new information to your code.</p>
+
+<p>However, just because a value is moved into a variable that doesn't automatically make the code more readable. <code>price *= TWO</code> isn't more informative than <code>price *= 2</code>. Therefore, don't create variables with names like <code>TWO</code>, <code>THREE</code> or <code>TEN</code>. It's still a magic number if the new variable name doesn't add any new meaning.</p>]]></content:encoded></item><item><title><![CDATA[Reducing repetition in HTML templates]]></title><description><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">Don't Repeat Yourself (DRY)</a> is an important principle in software development.</p>
+
+<p>Code repetition harms maintainability by making it difficult to keep behavior consistent across the application.</p>
+
+<p>Read this article to learn about a common repetition problem in HTML code and how to resolve it.</p>
+
+<h2 id="theproblemtemplatecodewithrepetitions">The problem: template code with repetitions</h2>]]></description><link>http://localhost:8080reducing-repetition-in-html-templates/</link><guid isPermaLink="false">5906457e-6977-4992-b4f9-42baa4d01e66</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Fri, 18 Sep 2015 15:33:59 GMT</pubDate><content:encoded><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">Don't Repeat Yourself (DRY)</a> is an important principle in software development.</p>
+
+<p>Code repetition harms maintainability by making it difficult to keep behavior consistent across the application.</p>
+
+<p>Read this article to learn about a common repetition problem in HTML code and how to resolve it.</p>
+
+<h2 id="theproblemtemplatecodewithrepetitions">The problem: template code with repetitions</h2>
+
+<p>How would you build a form like this?</p>
+
+<p><img src="http://localhost:8080content/images/2015/09/Screen-Shot-2015-09-15-at-15-44-55.png" alt="Image of a form with 4 fields"></p>
+
+<p>Directly writing the HTML for each form field is the most obvious solution:</p>
+
+<pre><code>&lt;div class="form-field"&gt;
+     &lt;label&gt;First Name&lt;/label&gt;
+     &lt;input type="text" name="firstName"&gt;&lt;/input&gt;
+&lt;/div&gt;
+&lt;div class="form-field"&gt;
+     &lt;label&gt;Last Name&lt;/label&gt;
+     &lt;input type="text" name="lastName"&gt;&lt;/input&gt;
+&lt;/div&gt;
+&lt;div class="form-field"&gt;
+     &lt;label&gt;City&lt;/label&gt;
+     &lt;input type="text" name="city"&gt;&lt;/input&gt;
+&lt;/div&gt;
+&lt;div class="form-field"&gt;
+     &lt;label&gt;Country&lt;/label&gt;
+     &lt;input type="text" country="country"&gt;&lt;/input&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>However, as you can see above, this involves a lot of repetition. Only the title and the name are different for each form field!</p>
+
+<p>As a result, if you wanted to add a new class to the label, you'd have to change the code in four different places.</p>
+
+<h2 id="eliminatinghtmlrepetition">Eliminating HTML repetition</h2>
+
+<p>To fix this problem, we have to separate the HTML structure from the content we want to display. The underlying HTML structure is the same for each form field.</p>
+
+<p>For example, the content above could be represented by this JavaScript object:</p>
+
+<pre><code>var formFields = [{
+    title: "First Name",
+    name: "firstName"
+}, {
+    title: "Last Name",
+    name: "lastName"
+}, {
+    title: "City",
+    name: "city"
+}, {
+    title: "Country",
+    name: "country"
+}];
+</code></pre>
+
+<p>For each field we want the following HTML code:</p>
+
+<pre><code>&lt;div class="form-field"&gt;
+     &lt;label&gt;{{title}}&lt;/label&gt;
+     &lt;input type="text" name="{{name}}"&gt;&lt;/input&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p><code>{{title}}</code> and <code>{{name}}</code> are <a href="http://www.codereadability.com/constructing-html-with-templates/">placeholders for our content data</a>.</p>
+
+<p>We need to join these two bits of information together using a <a href="http://www.codereadability.com/constructing-html-with-templates/">template engine</a> like <a href="https://github.com/janl/mustache.js/">Mustache</a> or <a href="http://handlebarsjs.com/">Handlebars</a>. </p>
+
+<p>Feel free to <a href="http://jsfiddle.net/9t138c66/3/">play around with the final code</a>.</p>
+
+<p>Note how it uses the template language to iterate over the <code>formFields</code> array:</p>
+
+<pre><code>{{#formFields}}
+    &lt;div class="form-field"&gt;
+         &lt;label&gt;{{title}}&lt;/label&gt;
+         &lt;input type="text" name="{{name}}"&gt;&lt;/input&gt;
+    &lt;/div&gt;
+{{/formFields}}
+</code></pre>
+
+<p>And then renders the template: </p>
+
+<pre><code> Mustache.render(template, {formFields: formFields});
+</code></pre>
+
+<p>Now it's easy to add another form field or modify each field's HTML code. Adding a new field is as simple as adding a new item to the <code>formFields</code> array. Modifying the template will make sure that the HTML for each form field is updated consistently.</p>
+
+<p>As an additional benefit, the form HTML could also be re-used for other forms using the same DOM structure.</p>]]></content:encoded></item><item><title><![CDATA[How to check for undefined in JavaScript]]></title><description><![CDATA[<p>When a variable is declared without being assigned a value its initial value is <code>undefined</code>.</p>
+
+<p>How do you check if a value is <code>undefined</code> in  JavaScript?</p>
+
+<h2 id="theshortanswer">The short answer</h2>
+
+<p>In modern browsers you can safely compare the variable directly to <code>undefined</code>:</p>
+
+<pre><code>if (name === undefined) {...}
+</code></pre>
+
+<p>Some people argue against comparing with</p>]]></description><link>http://localhost:8080how-to-check-for-undefined-in-javascript/</link><guid isPermaLink="false">44a04ef7-61e9-4747-8b07-f3293569b4ab</guid><dc:creator><![CDATA[Matt Zeunert]]></dc:creator><pubDate>Wed, 16 Sep 2015 15:27:25 GMT</pubDate><content:encoded><![CDATA[<p>When a variable is declared without being assigned a value its initial value is <code>undefined</code>.</p>
+
+<p>How do you check if a value is <code>undefined</code> in  JavaScript?</p>
+
+<h2 id="theshortanswer">The short answer</h2>
+
+<p>In modern browsers you can safely compare the variable directly to <code>undefined</code>:</p>
+
+<pre><code>if (name === undefined) {...}
+</code></pre>
+
+<p>Some people argue against comparing with  <code>undefined</code> because old browsers allowed its value to be re-assigned like this:</p>
+
+<pre><code>undefined = "test"
+</code></pre>
+
+<p>After that re-assignment, comparing with <code>undefined</code> directly would no longer correctly detect whether a variable was assigned a value.</p>
+
+<p>However, this behavior was fixed in 2009 with <a href="https://es5.github.io/#x15.1.1.3">ECMAScript 5</a>:</p>
+
+<blockquote>
+  <p>15.1.1.3 undefined  </p>
+  
+  <p>The value of undefined is undefined (see 8.1). This property has the attributes { <strong>[[Writable]]: false</strong>, [[Enumerable]]: false, [[Configurable]]: false }.</p>
+</blockquote>
+
+<p>In modern browsers it's no longer possible to re-assign the global <code>undefined</code> value.</p>
+
+<h2 id="whatifineedtosupportie8andolder">What if I need to support IE8 and older?</h2>
+
+<p>Generally, comparing directly to undefined is still safe. There's no practical reason for an application to re-assign the value of <code>undefined</code>.</p>
+
+<p><a href="http://stackoverflow.com/a/3390635/1290545">Thomas Eding</a> demonstrates this with an convincing analogy:</p>
+
+<blockquote>
+  <p>I don't hear people telling me that I shouldn't use setTimeout because someone can</p>
+
+<pre><code>window.setTimeout = function () {
+    alert("Got you now!");
+};
+</code></pre>
+  
+  <p>Bottom line, the "it can be redefined" argument to not use a raw <code>===</code> undefined is bogus.</p>
+</blockquote>
+
+<p>If you are still concerned, there are two ways to check if a value is undefined even if the global <code>undefined</code> has been overwritten.</p>
+
+<p>You can use the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/void">void operator</a> to obtain the value of <code>undefined</code>. This will work even if the global <code>window.undefined</code> value has been over-written:</p>
+
+<pre><code>if (name === void(0)) {...}
+</code></pre>
+
+<p>The zero in this example doesn't have any special meaning, you could just as well use <code>1</code> or <code>function(){}</code>. <code>void(anything)</code> will always evaluate to <code>undefined</code>.</p>
+
+<p>Alternatively, you can use the  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">typeof operator</a> to safely check if a value was assigned. Instead of comparing to the global <code>undefined</code> value you check if the  value's type is "undefined":</p>
+
+<pre><code>if (typeof name === "undefined") {...}
+</code></pre>
+
+<p>Note that this is slightly different from the previous options. Even if <code>name</code> wasn't declared <code>typeof</code> would still say it's undefined. If you compared an undeclared variable to <code>undefined</code> or <code>void(0)</code> you would instead get a ReferenceError.</p>
+
+<h3 id="butdontusevoid0directly">But don't use void(0) directly</h3>
+
+<p>Avoid using <code>void(0)</code> or <code>typeof x === "undefined"</code> verbatim in code. These expressions aren't self-explanatory and should be <a href="http://www.codereadability.com/are-one-line-functions-a-good-idea/">wrapped in an isUndefined function</a> like this:</p>
+
+<pre><code>function isUndefined(value){
+    // Obtain `undefined` value that's
+    // guaranteed to not have been re-assigned
+    var undefined = void(0);
+    return value === undefined;
+}
+</code></pre>
+
+<p>Many utility libraries already have this functionality built in, for example there's an <a href="http://underscorejs.org/#isUndefined"><code>_.isUndefined</code> function in Underscore.js</a>.</p>]]></content:encoded></item></channel></rss>

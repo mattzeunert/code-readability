@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Reducing repetition in HTML templates</title>
+    <meta name="description" content>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400">
+
+    <link rel="canonical" href="http://localhost:8080reducing-repetition-in-html-templates/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:8080reducing-repetition-in-html-templates/amp/">
+    
+    <meta property="og:site_name" content="JavaScript Code Readability">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Reducing repetition in HTML templates">
+    <meta property="og:description" content="Don&#x27;t Repeat Yourself (DRY) is an important principle in software development. Code repetition harms maintainability by making it difficult to keep behavior consistent across the application. Read this article to learn about a common repetition problem in HTML code and how to resolve it. The problem: template code with repetitions">
+    <meta property="og:url" content="http://localhost:8080reducing-repetition-in-html-templates/">
+    <meta property="article:published_time" content="2015-09-18T15:33:59.000Z">
+    <meta property="article:modified_time" content="2015-09-21T17:27:25.000Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Reducing repetition in HTML templates">
+    <meta name="twitter:description" content="Don&#x27;t Repeat Yourself (DRY) is an important principle in software development. Code repetition harms maintainability by making it difficult to keep behavior consistent across the application. Read this article to learn about a common repetition problem in HTML code and how to resolve it. The problem: template code with repetitions">
+    <meta name="twitter:url" content="http://localhost:8080reducing-repetition-in-html-templates/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Matt Zeunert">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "JavaScript Code Readability",
+        "logo": "http://localhost:8080ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Matt Zeunert",
+        "url": "http://localhost:8080author/matt/",
+        "sameAs": [
+            "https://twitter.com/mattzeunert"
+        ]
+    },
+    "headline": "Reducing repetition in HTML templates",
+    "url": "http://localhost:8080reducing-repetition-in-html-templates/",
+    "datePublished": "2015-09-18T15:33:59.000Z",
+    "dateModified": "2015-09-21T17:27:25.000Z",
+    "description": "Don&#x27;t Repeat Yourself (DRY) is an important principle in software development. Code repetition harms maintainability by making it difficult to keep behavior consistent across the application. Read this article to learn about a common repetition problem in HTML code and how to resolve it. The problem: template code with repetitions",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.codereadability.com"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="JavaScript Code Readability" href="http://localhost:8080rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="../">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="../rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<style>
+.pull-quote {
+  float: right;
+  font-size: 28px;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  line-height: 1.2em;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  color: white;
+  background: #3A4145;
+  padding: 20px;
+  text-align: center;
+}
+.pull-quote:before {
+  content: "\201C";
+}
+.pull-quote:after {
+  content: "\201D";
+}
+
+@media only screen and (max-width: 900px) {
+  .pull-quote {
+    width: 100%;
+    max-width: none;
+    font-size: 24px;
+  }
+}
+</style>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Reducing repetition in HTML templates</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-09-18">18 September 2015</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p><a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">Don't Repeat Yourself (DRY)</a> is an important principle in software development.</p>
+
+<p>Code repetition harms maintainability by making it difficult to keep behavior consistent across the application.</p>
+
+<p>Read this article to learn about a common repetition problem in HTML code and how to resolve it.</p>
+
+<h2 id="theproblemtemplatecodewithrepetitions">The problem: template code with repetitions</h2>
+
+<p>How would you build a form like this?</p>
+
+<p><img src="../content/images/2015/09/Screen-Shot-2015-09-15-at-15-44-55.png" alt="Image of a form with 4 fields"></p>
+
+<p>Directly writing the HTML for each form field is the most obvious solution:</p>
+
+<pre><code>&lt;div class="form-field"&gt;
+     &lt;label&gt;First Name&lt;/label&gt;
+     &lt;input type="text" name="firstName"&gt;&lt;/input&gt;
+&lt;/div&gt;
+&lt;div class="form-field"&gt;
+     &lt;label&gt;Last Name&lt;/label&gt;
+     &lt;input type="text" name="lastName"&gt;&lt;/input&gt;
+&lt;/div&gt;
+&lt;div class="form-field"&gt;
+     &lt;label&gt;City&lt;/label&gt;
+     &lt;input type="text" name="city"&gt;&lt;/input&gt;
+&lt;/div&gt;
+&lt;div class="form-field"&gt;
+     &lt;label&gt;Country&lt;/label&gt;
+     &lt;input type="text" country="country"&gt;&lt;/input&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>However, as you can see above, this involves a lot of repetition. Only the title and the name are different for each form field!</p>
+
+<p>As a result, if you wanted to add a new class to the label, you'd have to change the code in four different places.</p>
+
+<h2 id="eliminatinghtmlrepetition">Eliminating HTML repetition</h2>
+
+<p>To fix this problem, we have to separate the HTML structure from the content we want to display. The underlying HTML structure is the same for each form field.</p>
+
+<p>For example, the content above could be represented by this JavaScript object:</p>
+
+<pre><code>var formFields = [{
+    title: "First Name",
+    name: "firstName"
+}, {
+    title: "Last Name",
+    name: "lastName"
+}, {
+    title: "City",
+    name: "city"
+}, {
+    title: "Country",
+    name: "country"
+}];
+</code></pre>
+
+<p>For each field we want the following HTML code:</p>
+
+<pre><code>&lt;div class="form-field"&gt;
+     &lt;label&gt;{{title}}&lt;/label&gt;
+     &lt;input type="text" name="{{name}}"&gt;&lt;/input&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p><code>{{title}}</code> and <code>{{name}}</code> are <a href="http://www.codereadability.com/constructing-html-with-templates/">placeholders for our content data</a>.</p>
+
+<p>We need to join these two bits of information together using a <a href="http://www.codereadability.com/constructing-html-with-templates/">template engine</a> like <a href="https://github.com/janl/mustache.js/">Mustache</a> or <a href="http://handlebarsjs.com/">Handlebars</a>. </p>
+
+<p>Feel free to <a href="http://jsfiddle.net/9t138c66/3/">play around with the final code</a>.</p>
+
+<p>Note how it uses the template language to iterate over the <code>formFields</code> array:</p>
+
+<pre><code>{{#formFields}}
+    &lt;div class="form-field"&gt;
+         &lt;label&gt;{{title}}&lt;/label&gt;
+         &lt;input type="text" name="{{name}}"&gt;&lt;/input&gt;
+    &lt;/div&gt;
+{{/formFields}}
+</code></pre>
+
+<p>And then renders the template: </p>
+
+<pre><code> Mustache.render(template, {formFields: formFields});
+</code></pre>
+
+<p>Now it's easy to add another form field or modify each field's HTML code. Adding a new field is as simple as adding a new item to the <code>formFields</code> array. Modifying the template will make sure that the HTML for each form field is updated consistently.</p>
+
+<p>As an additional benefit, the form HTML could also be re-used for other forms using the same DOM structure.</p>
+        </section>
+
+
+<script type="text/javascript">
+amzn_assoc_placement = "adunit0";
+amzn_assoc_search_bar = "false";
+amzn_assoc_tracking_id = "mzrexamples-20";
+amzn_assoc_ad_mode = "manual";
+amzn_assoc_ad_type = "smart";
+amzn_assoc_marketplace = "amazon";
+amzn_assoc_region = "US";
+amzn_assoc_title = "Make your code awesome";
+amzn_assoc_linkid = "52e13d7487501a079692a6290f4b1742";
+amzn_assoc_asins = "0596802293,1449327680,0735619670,0132350882";
+</script>
+<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+
+<!--
+        <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+          #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+          /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+             We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+          #mc_embed_signup form {
+            padding: 0;
+          }
+          #mc_embed_signup input.button {
+            background: #000085;
+          }
+          #mc_embed_signup input.button:hover {
+            background: #000042;
+          }
+          #mc_embed_signup input[type="email"]{
+            border-radius: 5px;
+          }
+
+.mailchimp-message {
+display: none;
+    padding: 10px;
+  background: #fafafa;
+  line-height: 1.5em;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+
+ #newsletter-form p.weekly {
+  display: none;
+ }
+
+
+
+        </style>
+
+        <style>
+.newsletter-form-b #newsletter-form {
+    border: 5px solid #dc3e3b;
+    padding: 40px !important;
+    border-radius: 5px;
+    background-color: #fefbfc;
+}
+
+.newsletter-form-b #newsletter-form label {
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.newsletter-form-b #newsletter-form input[type="text"] {
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"] {
+  height: auto;
+  padding: 10px;
+  background-color: #dc3e3b;
+  font-size: 20px;
+  margin: 0;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"]:hover {
+  background-color: #961d1b;
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    margin-top: 20px;
+    font-size: 20px;
+    border-color: #aaa;
+    padding: 10px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 700px) {
+  .newsletter-form-b #newsletter-form input[type="submit"],
+  .newsletter-form-b #newsletter-form input[type="text"] {
+    width: 100%;
+  }
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    background-color: transparent;
+    border: none;
+    margin-top: 0;
+}
+
+.newsletter-form-b #newsletter-form p.weekly {
+  display: block;
+  margin-bottom: 40px;
+  margin-top: 0px
+}
+        </style>
+
+
+
+
+        <div id="mc_embed_signup">
+        <form id="newsletter-form"  method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" novalidate>
+            <div id="mc_embed_signup_scroll">
+          <label for="mce-EMAIL">Read more code readability articles like this</label>
+          <p class="weekly">Get an email with a new articles once a week.</p>
+          <input type="text" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address" required>
+            
+            <div style="position: absolute; left: -5000px;"><input type="text" name="b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            <div class="mailchimp-message">
+
+            </div>
+        </form>
+        </div>
+
+
+
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="/author/matt/">Matt Zeunert</a></h4>
+
+                    <p>Read <a href="/author/matt/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">London, UK</span>
+                    <span class="author-link icon-link"><a href="https://twitter.com/mattzeunert">https://twitter.com/mattzeunert</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Reducing%20repetition%20in%20HTML%20templates&amp;url=http://localhost:8080reducing-repetition-in-html-templates/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8080reducing-repetition-in-html-templates/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:8080reducing-repetition-in-html-templates/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+-->
+<hr>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'codereadability';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../is-two-a-magic-number-in-programming/">
+        <section class="post">
+            <h2>When is two a magic number?</h2>
+            <p>A magic number is a number that appears directly in source code, but should really be given a name&hellip;</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../how-to-check-for-undefined-in-javascript/">
+        <section class="post">
+            <h2>How to check for undefined in JavaScript</h2>
+            <p>When a variable is declared without being assigned a value its initial value is undefined. How do you check&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../">JavaScript Code Readability</a> &copy; 2019</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64817302-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../assets/js/index.js"></script>
+
+<!--
+    <script>
+
+
+
+      if (window.ga === undefined) {
+        window.ga = function(){
+          console.log("ga blocked")
+        }
+      }
+
+        var $ = jQuery;
+
+
+        if (localStorage.getItem("gaDimension1") === null) {
+            var dimension1 = Math.random() > .5 ? "B" : "A";
+            ga('set', 'dimension1', dimension1);
+            ga('send', 'event', 'Dimension1 Set', dimension1, location.pathname);
+            localStorage.setItem("gaDimension1", dimension1);
+        }
+
+        if (localStorage.getItem("gaDimension1")==="B") {
+          $("body").addClass("newsletter-form-b");
+        }
+
+
+          $("#newsletter-form").submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var form = $(this);
+
+            function updateUi(msg) {
+              $(".mailchimp-message").show().html(msg.replace("0 - ", ""));
+
+            }
+
+            $("#mc-embedded-subscribe").prop("disabled", true);
+            $("#mce-EMAIL").prop("disabled", true);
+
+            var email = $("#mce-EMAIL").val();
+
+            $.ajax({
+                type: "GET",
+                url: "//mostlystatic.us8.list-manage.com/subscribe/post-json?u=6e1d1f58acfc60f4eb4adce31&amp;id=3c7a4d756e&c=?",
+                data: "b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e=&EMAIL=" + encodeURIComponent(email),
+                cache       : false,
+                dataType    : 'json',
+                contentType: "application/json; charset=utf-8",
+                error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+                success     : function(data) {
+                    updateUi(data.msg);
+                    if (data.result != "success") {
+                      $("#mc-embedded-subscribe").prop("disabled", false);
+                        $("#mce-EMAIL").prop("disabled", false);
+                        ga('send', 'event', 'Failed Newsletter Subscribe', location.pathname, email);
+                        ga('set', 'dimension1', dimensionValue);
+                        // Something went wrong, do something to notify the user. maybe alert(data.msg);
+                    } else {
+                        // It worked, carry on...
+                        ga('send', 'event', 'Newsletter Subscribe', location.pathname, email);
+                        $('#newsletter-form label, #newsletter-form p, #newsletter-form input[type="text"], #newsletter-form input[type="submit"]').hide();
+                    }
+                }
+            });
+
+            return false;
+
+          })
+        </script>
+-->
+
+
+</body>
+</html>

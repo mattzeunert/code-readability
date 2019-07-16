@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Strategies For Making Sense Of JavaScript Code</title>
+    <meta name="description" content>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400">
+
+    <link rel="canonical" href="http://localhost:8080strategies-for-making-sense-of-javascript-code/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:8080strategies-for-making-sense-of-javascript-code/amp/">
+    
+    <meta property="og:site_name" content="JavaScript Code Readability">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Strategies For Making Sense Of JavaScript Code">
+    <meta property="og:description" content="It&#x27;s hard to understand what&#x27;s going on when you first dive into an unfamiliar codebase. The decisions that were made when writing the code often aren&#x27;t obvious. This post will outline a few strategies to help you make sense of unfamiliar code. Watch How The Code Behaves In Practice A">
+    <meta property="og:url" content="http://localhost:8080strategies-for-making-sense-of-javascript-code/">
+    <meta property="article:published_time" content="2016-09-27T16:50:59.000Z">
+    <meta property="article:modified_time" content="2016-09-28T07:52:39.000Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Strategies For Making Sense Of JavaScript Code">
+    <meta name="twitter:description" content="It&#x27;s hard to understand what&#x27;s going on when you first dive into an unfamiliar codebase. The decisions that were made when writing the code often aren&#x27;t obvious. This post will outline a few strategies to help you make sense of unfamiliar code. Watch How The Code Behaves In Practice A">
+    <meta name="twitter:url" content="http://localhost:8080strategies-for-making-sense-of-javascript-code/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Matt Zeunert">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "JavaScript Code Readability",
+        "logo": "http://localhost:8080ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Matt Zeunert",
+        "url": "http://localhost:8080author/matt/",
+        "sameAs": [
+            "https://twitter.com/mattzeunert"
+        ]
+    },
+    "headline": "Strategies For Making Sense Of JavaScript Code",
+    "url": "http://localhost:8080strategies-for-making-sense-of-javascript-code/",
+    "datePublished": "2016-09-27T16:50:59.000Z",
+    "dateModified": "2016-09-28T07:52:39.000Z",
+    "description": "It&#x27;s hard to understand what&#x27;s going on when you first dive into an unfamiliar codebase. The decisions that were made when writing the code often aren&#x27;t obvious. This post will outline a few strategies to help you make sense of unfamiliar code. Watch How The Code Behaves In Practice A",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.codereadability.com"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="JavaScript Code Readability" href="http://localhost:8080rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="../">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="../rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<style>
+.pull-quote {
+  float: right;
+  font-size: 28px;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  line-height: 1.2em;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  color: white;
+  background: #3A4145;
+  padding: 20px;
+  text-align: center;
+}
+.pull-quote:before {
+  content: "\201C";
+}
+.pull-quote:after {
+  content: "\201D";
+}
+
+@media only screen and (max-width: 900px) {
+  .pull-quote {
+    width: 100%;
+    max-width: none;
+    font-size: 24px;
+  }
+}
+</style>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Strategies For Making Sense Of JavaScript Code</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2016-09-27">27 September 2016</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>It's hard to understand what's going on when you first dive into an unfamiliar codebase. The decisions that were made when writing the code often aren't obvious.</p>
+
+<p>This post will outline a few strategies to help you make sense of unfamiliar code.</p>
+
+<h2 id="watchhowthecodebehavesinpractice">Watch How The Code Behaves In Practice</h2>
+
+<p>A debugger lets you see the actual variable values at run time. You can run your code line by line, see how values change over time, and find out why specific functions are called.</p>
+
+<p>Stepping through code will give you a more concrete understanding of how your code works in a real scenario.</p>
+
+<p>The debugger also makes it easier to navigate through the codebase. For example, you can right-click on functions in the debugger to find the function definition.</p>
+
+<p>However, to use a debugger you first need to know a page that runs the code that you're interested in. Then you can set a breakpoint in your code and step through it.</p>
+
+<p><img src="../content/images/2016/09/Screen-Shot-2016-09-27-at-17.33.23.png" alt="Chrome DevTools Debugger"></p>
+
+<h2 id="lookatunitandintegrationtests">Look At Unit And Integration Tests</h2>
+
+<p>If your codebase comes with automated unit or integration tests you're lucky. The tests for the module you're looking at will show you how to use the module.</p>
+
+<p>For example, you can see what kind of values can be passed into a function, and what the expected return value is.</p>
+
+<p>The tests will also give you a high level idea of the purpose of the module, and its capabilities.</p>
+
+<p>If your module has tests they'll be in a test file named something like like <code>module.spec.js</code>, <code>module-test.js</code> or <code>tests/module.js</code>.</p>
+
+<p><img src="../content/images/2016/09/Screen-Shot-2016-09-27-at-17.52.03.png" alt="Unit test code"></p>
+
+<h2 id="usegithistorytodiscoverthewhy">Use Git History To Discover The "Why"</h2>
+
+<p>Version control software keeps track of code changes. Each change is recorded as a commit, showing the code that changed as well as a message explaining the changes.</p>
+
+<p>To see recent changes made to a particular file look at its revision history. </p>
+
+<p><img src="../content/images/2016/09/Screen-Shot-2016-09-27-at-17.40.12.png" alt="Git history on Github"></p>
+
+<p>When reading code you'll often run into sections that appear needlessly complicated. Why wasn't a much simpler solution picked instead?</p>
+
+<p>The commit messages can provide an answer. You can use Git or SVN <code>blame</code> to find out when a specific line of code was added, or when it was last modified.</p>
+
+<p><img src="../content/images/2016/09/Screen-Shot-2016-09-27-at-17.38.42.png" alt="Git blame on Github"></p>
+
+<p>If a line was added to fix a particular bug, <code>blame</code> lets you find the commit for the bug fix.</p>
+
+<p>Hopefully, the commit message will explain the bug, and maybe reference a Github issue or a ticket in a project management tool like Jira. </p>
+
+<p>(When writing your own code, don't make others rely on <code>blame</code>. Add a comment explaining what went wrong in the past and why this particular solution was needed.)</p>
+
+<h2 id="searchthroughyoursourcecode">Search Through Your Source Code</h2>
+
+<p>This is low tech, but it works even when you don't have automated tests or a commit history available.</p>
+
+<p>Search for the function or module name in your editor. That will show where the function or module is used.</p>
+
+<p>Looking at the different usage examples will also give you a better idea of the kind of values your code needs to handle.</p>
+
+<p><img src="../content/images/2016/09/Screen-Shot-2016-09-27-at-17.41.31.png" alt="Atom Code Search"></p>
+        </section>
+
+
+<script type="text/javascript">
+amzn_assoc_placement = "adunit0";
+amzn_assoc_search_bar = "false";
+amzn_assoc_tracking_id = "mzrexamples-20";
+amzn_assoc_ad_mode = "manual";
+amzn_assoc_ad_type = "smart";
+amzn_assoc_marketplace = "amazon";
+amzn_assoc_region = "US";
+amzn_assoc_title = "Make your code awesome";
+amzn_assoc_linkid = "52e13d7487501a079692a6290f4b1742";
+amzn_assoc_asins = "0596802293,1449327680,0735619670,0132350882";
+</script>
+<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+
+<!--
+        <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+          #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+          /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+             We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+          #mc_embed_signup form {
+            padding: 0;
+          }
+          #mc_embed_signup input.button {
+            background: #000085;
+          }
+          #mc_embed_signup input.button:hover {
+            background: #000042;
+          }
+          #mc_embed_signup input[type="email"]{
+            border-radius: 5px;
+          }
+
+.mailchimp-message {
+display: none;
+    padding: 10px;
+  background: #fafafa;
+  line-height: 1.5em;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+
+ #newsletter-form p.weekly {
+  display: none;
+ }
+
+
+
+        </style>
+
+        <style>
+.newsletter-form-b #newsletter-form {
+    border: 5px solid #dc3e3b;
+    padding: 40px !important;
+    border-radius: 5px;
+    background-color: #fefbfc;
+}
+
+.newsletter-form-b #newsletter-form label {
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.newsletter-form-b #newsletter-form input[type="text"] {
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"] {
+  height: auto;
+  padding: 10px;
+  background-color: #dc3e3b;
+  font-size: 20px;
+  margin: 0;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"]:hover {
+  background-color: #961d1b;
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    margin-top: 20px;
+    font-size: 20px;
+    border-color: #aaa;
+    padding: 10px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 700px) {
+  .newsletter-form-b #newsletter-form input[type="submit"],
+  .newsletter-form-b #newsletter-form input[type="text"] {
+    width: 100%;
+  }
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    background-color: transparent;
+    border: none;
+    margin-top: 0;
+}
+
+.newsletter-form-b #newsletter-form p.weekly {
+  display: block;
+  margin-bottom: 40px;
+  margin-top: 0px
+}
+        </style>
+
+
+
+
+        <div id="mc_embed_signup">
+        <form id="newsletter-form"  method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" novalidate>
+            <div id="mc_embed_signup_scroll">
+          <label for="mce-EMAIL">Read more code readability articles like this</label>
+          <p class="weekly">Get an email with a new articles once a week.</p>
+          <input type="text" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address" required>
+            
+            <div style="position: absolute; left: -5000px;"><input type="text" name="b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            <div class="mailchimp-message">
+
+            </div>
+        </form>
+        </div>
+
+
+
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="/author/matt/">Matt Zeunert</a></h4>
+
+                    <p>Read <a href="/author/matt/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">London, UK</span>
+                    <span class="author-link icon-link"><a href="https://twitter.com/mattzeunert">https://twitter.com/mattzeunert</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Strategies%20For%20Making%20Sense%20Of%20JavaScript%20Code&amp;url=http://localhost:8080strategies-for-making-sense-of-javascript-code/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8080strategies-for-making-sense-of-javascript-code/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:8080strategies-for-making-sense-of-javascript-code/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+-->
+<hr>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'codereadability';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../how-to-avoid-magic-numbers-when-manipulating-strings/">
+        <section class="post">
+            <h2>How to avoid magic numbers when manipulating strings</h2>
+            <p>String functions like substr, substring, or slice all take character indices as parameters. For example, slice returns the characters&hellip;</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../boolean-arguments/">
+        <section class="post">
+            <h2>More Readable Alternatives To Boolean Function Parameters</h2>
+            <p>Boolean function parameters are hard to read. What could true possibly mean here? settings.createSetting("userAge", true) You need&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../">JavaScript Code Readability</a> &copy; 2019</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64817302-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../assets/js/index.js"></script>
+
+<!--
+    <script>
+
+
+
+      if (window.ga === undefined) {
+        window.ga = function(){
+          console.log("ga blocked")
+        }
+      }
+
+        var $ = jQuery;
+
+
+        if (localStorage.getItem("gaDimension1") === null) {
+            var dimension1 = Math.random() > .5 ? "B" : "A";
+            ga('set', 'dimension1', dimension1);
+            ga('send', 'event', 'Dimension1 Set', dimension1, location.pathname);
+            localStorage.setItem("gaDimension1", dimension1);
+        }
+
+        if (localStorage.getItem("gaDimension1")==="B") {
+          $("body").addClass("newsletter-form-b");
+        }
+
+
+          $("#newsletter-form").submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var form = $(this);
+
+            function updateUi(msg) {
+              $(".mailchimp-message").show().html(msg.replace("0 - ", ""));
+
+            }
+
+            $("#mc-embedded-subscribe").prop("disabled", true);
+            $("#mce-EMAIL").prop("disabled", true);
+
+            var email = $("#mce-EMAIL").val();
+
+            $.ajax({
+                type: "GET",
+                url: "//mostlystatic.us8.list-manage.com/subscribe/post-json?u=6e1d1f58acfc60f4eb4adce31&amp;id=3c7a4d756e&c=?",
+                data: "b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e=&EMAIL=" + encodeURIComponent(email),
+                cache       : false,
+                dataType    : 'json',
+                contentType: "application/json; charset=utf-8",
+                error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+                success     : function(data) {
+                    updateUi(data.msg);
+                    if (data.result != "success") {
+                      $("#mc-embedded-subscribe").prop("disabled", false);
+                        $("#mce-EMAIL").prop("disabled", false);
+                        ga('send', 'event', 'Failed Newsletter Subscribe', location.pathname, email);
+                        ga('set', 'dimension1', dimensionValue);
+                        // Something went wrong, do something to notify the user. maybe alert(data.msg);
+                    } else {
+                        // It worked, carry on...
+                        ga('send', 'event', 'Newsletter Subscribe', location.pathname, email);
+                        $('#newsletter-form label, #newsletter-form p, #newsletter-form input[type="text"], #newsletter-form input[type="submit"]').hide();
+                    }
+                }
+            });
+
+            return false;
+
+          })
+        </script>
+-->
+
+
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>What&#x27;s the performance cost of a function call?</title>
+    <meta name="description" content>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400">
+
+    <link rel="canonical" href="http://localhost:8080performance-cost-javascript-function-call-and-foreach/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:8080performance-cost-javascript-function-call-and-foreach/amp/">
+    
+    <meta property="og:site_name" content="JavaScript Code Readability">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="What&#x27;s the performance cost of a function call?">
+    <meta property="og:description" content="In addition to file size, one reason it can be tempting to compromise on readability is performance. However, this article demonstrates why that&#x27;s a bad idea. Keep your focus on writing readable code and only optimize if there&#x27;s a clear benefit to the end user. How much does splitting code">
+    <meta property="og:url" content="http://localhost:8080performance-cost-javascript-function-call-and-foreach/">
+    <meta property="article:published_time" content="2015-08-24T14:17:00.000Z">
+    <meta property="article:modified_time" content="2015-08-29T14:55:49.000Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="What&#x27;s the performance cost of a function call?">
+    <meta name="twitter:description" content="In addition to file size, one reason it can be tempting to compromise on readability is performance. However, this article demonstrates why that&#x27;s a bad idea. Keep your focus on writing readable code and only optimize if there&#x27;s a clear benefit to the end user. How much does splitting code">
+    <meta name="twitter:url" content="http://localhost:8080performance-cost-javascript-function-call-and-foreach/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Matt Zeunert">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "JavaScript Code Readability",
+        "logo": "http://localhost:8080ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Matt Zeunert",
+        "url": "http://localhost:8080author/matt/",
+        "sameAs": [
+            "https://twitter.com/mattzeunert"
+        ]
+    },
+    "headline": "What&#x27;s the performance cost of a function call?",
+    "url": "http://localhost:8080performance-cost-javascript-function-call-and-foreach/",
+    "datePublished": "2015-08-24T14:17:00.000Z",
+    "dateModified": "2015-08-29T14:55:49.000Z",
+    "description": "In addition to file size, one reason it can be tempting to compromise on readability is performance. However, this article demonstrates why that&#x27;s a bad idea. Keep your focus on writing readable code and only optimize if there&#x27;s a clear benefit to the end user. How much does splitting code",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.codereadability.com"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="JavaScript Code Readability" href="http://localhost:8080rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="../">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="../rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<style>
+.pull-quote {
+  float: right;
+  font-size: 28px;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  line-height: 1.2em;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  color: white;
+  background: #3A4145;
+  padding: 20px;
+  text-align: center;
+}
+.pull-quote:before {
+  content: "\201C";
+}
+.pull-quote:after {
+  content: "\201D";
+}
+
+@media only screen and (max-width: 900px) {
+  .pull-quote {
+    width: 100%;
+    max-width: none;
+    font-size: 24px;
+  }
+}
+</style>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">What&#x27;s the performance cost of a function call?</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-08-24">24 August 2015</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>In addition to <a href="http://www.codereadability.com/why-you-dont-have-to-worry-about-the-file-size-of-your-code/">file size</a>, one reason it can be tempting to compromise on readability is performance.</p>
+
+<p>However, this article demonstrates why that's a bad idea. Keep your focus on writing readable code and only optimize if there's a clear benefit to the end user.</p>
+
+<h2 id="howmuchdoessplittingcodeintosmallfunctionscost">How much does splitting code into small functions cost?</h2>
+
+<p><a href="http://fiddle.jshell.net/vzehnrq9/4/show/">This jsFiddle</a> compares two similar bits of code.  Both add two numbers ten million times.</p>
+
+<p>The first code snippet calculates the sum directly inside a for loop, while the second one calls an <code>add</code> function:</p>
+
+<pre><code>function (){
+  var c;
+  for (var i = 0; i &lt; 10000000; i++) {
+    c = a + i;
+  }
+}
+
+function (){
+  var c;
+  for (var i = 0; i &lt; 10000000; i++) {
+    c = add(a, i);
+  }
+}
+</code></pre>
+
+<p>So what's the cost of an extra 10 million function calls? In this case, there's no extra overhead:</p>
+
+<blockquote>
+  <p>2.77ms - Addition in for loop <br>
+  2.76ms - Addition in function <br>
+  (Results vary by how each browser treats the code above.)</p>
+</blockquote>
+
+<p>That's because of an optimization called inlining that's performed by all modern <a href="https://en.wikipedia.org/wiki/JavaScript_engine">JavaScript engines</a>.</p>
+
+<p>The browser's JavaScript engine looks at our code and decides that it's more efficient to replace the function call with direct addition.</p>
+
+<p>This means that both code snippets are ultimately run in the same way, even though the code we wrote is different. Consequently, they take the same amount of time to run.</p>
+
+<p>If you're interested you can play around with Node to <a href="http://www.mattzeunert.com/2015/08/21/toggling-v8-function-inlining-with-node.html">explore the effect of function inlining</a>.</p>
+
+<h2 id="costofusingforeachinsteadofaforloop">Cost of using forEach instead of a for loop</h2>
+
+<p>There's no guarantee that the JavaScript engine will optimize your code.</p>
+
+<p>Even the example above isn't always optimized. It depends on the decision made by the JavaScript engine.</p>
+
+<p>Take a look at <a href="http://fiddle.jshell.net/vzehnrq9/5/">this example</a> using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach">forEach</a> on a list containing ten million numbers, doing the same additions as before.</p>
+
+<blockquote>
+  <p>5.4ms - Direct addition <br>
+  9.3ms - Add function <br>
+  162.5ms - ForEach</p>
+</blockquote>
+
+<p>ForEach is 30 times slower than a for loop! Why would you ever use forEach?</p>
+
+<p>The answer is that most of the time the cost of your looping logic is completely negligible.</p>
+
+<p>The example above iterates over 10 million values. But that's a very rare scenario. Even having 10 thousand list items is unusual, but forEach would only take a fraction of a millisecond to go through all 10 thousand items.</p>
+
+<p>In addition to that, the performance cost of the looping logic is small compared to other computations. Take <a href="http://fiddle.jshell.net/vzehnrq9/11/">this example</a> which generates a small bit of HTML code instead of just performing an addition:</p>
+
+<blockquote>
+  <p>1961ms - For Loop <br>
+  2188ms - ForEach</p>
+</blockquote>
+
+<p>Now forEach is only 12% slower than a for loop. That's because generating HTML code takes much more time than iterating over a list.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>As a general rule, there's no need to worry about the performance impact of function calls or list iterations.</p>
+
+<p>That's because of three reasons:</p>
+
+<ul>
+<li>The JavaScript engine will optimize your code</li>
+<li>Most of your lists will contain fewer than 1000 items</li>
+<li>The cost of bare function calls is tiny compared to other computations</li>
+</ul>
+
+<p>Jeff Atwood also wrote an interesting <a href="http://blog.codinghorror.com/the-sad-tragedy-of-micro-optimization-theater/">article about micro-optimization</a> and concluded that</p>
+
+<blockquote>
+  <p>you should be more worried about the maintainability and readability of your code than its performance. And that is perhaps the most tragic thing about letting yourself get sucked into micro-optimization theater -- it distracts you from your real goal: writing better code.</p>
+</blockquote>
+
+<p>Focus on writing readable code! Other people are much more likely to struggle with your code than computers are.</p>
+
+<h1 id="howtohandleperformanceissuesiftheydoarise">How to handle performance issues if they do arise</h1>
+
+<p>Use profiling tools when you do run into performance problems. The <a href="https://developer.chrome.com/devtools/docs/cpu-profiling">profiling features included in Google Chrome</a> usually give you a good idea of what part of your code is most CPU intensive.</p>
+
+<p>Once you've identified the slowest part of your program you can focus your efforts there.</p>
+
+<p>Most performance improvements won't negatively impact readability!</p>
+
+<p>If you have to make a code change that reduces readability, leave a comment to explain why. This allows future developers to understand the advantage of that choice over a more readable alternative.</p>
+        </section>
+
+
+<script type="text/javascript">
+amzn_assoc_placement = "adunit0";
+amzn_assoc_search_bar = "false";
+amzn_assoc_tracking_id = "mzrexamples-20";
+amzn_assoc_ad_mode = "manual";
+amzn_assoc_ad_type = "smart";
+amzn_assoc_marketplace = "amazon";
+amzn_assoc_region = "US";
+amzn_assoc_title = "Make your code awesome";
+amzn_assoc_linkid = "52e13d7487501a079692a6290f4b1742";
+amzn_assoc_asins = "0596802293,1449327680,0735619670,0132350882";
+</script>
+<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+
+<!--
+        <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+          #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+          /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+             We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+          #mc_embed_signup form {
+            padding: 0;
+          }
+          #mc_embed_signup input.button {
+            background: #000085;
+          }
+          #mc_embed_signup input.button:hover {
+            background: #000042;
+          }
+          #mc_embed_signup input[type="email"]{
+            border-radius: 5px;
+          }
+
+.mailchimp-message {
+display: none;
+    padding: 10px;
+  background: #fafafa;
+  line-height: 1.5em;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+
+ #newsletter-form p.weekly {
+  display: none;
+ }
+
+
+
+        </style>
+
+        <style>
+.newsletter-form-b #newsletter-form {
+    border: 5px solid #dc3e3b;
+    padding: 40px !important;
+    border-radius: 5px;
+    background-color: #fefbfc;
+}
+
+.newsletter-form-b #newsletter-form label {
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.newsletter-form-b #newsletter-form input[type="text"] {
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"] {
+  height: auto;
+  padding: 10px;
+  background-color: #dc3e3b;
+  font-size: 20px;
+  margin: 0;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"]:hover {
+  background-color: #961d1b;
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    margin-top: 20px;
+    font-size: 20px;
+    border-color: #aaa;
+    padding: 10px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 700px) {
+  .newsletter-form-b #newsletter-form input[type="submit"],
+  .newsletter-form-b #newsletter-form input[type="text"] {
+    width: 100%;
+  }
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    background-color: transparent;
+    border: none;
+    margin-top: 0;
+}
+
+.newsletter-form-b #newsletter-form p.weekly {
+  display: block;
+  margin-bottom: 40px;
+  margin-top: 0px
+}
+        </style>
+
+
+
+
+        <div id="mc_embed_signup">
+        <form id="newsletter-form"  method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" novalidate>
+            <div id="mc_embed_signup_scroll">
+          <label for="mce-EMAIL">Read more code readability articles like this</label>
+          <p class="weekly">Get an email with a new articles once a week.</p>
+          <input type="text" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address" required>
+            
+            <div style="position: absolute; left: -5000px;"><input type="text" name="b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            <div class="mailchimp-message">
+
+            </div>
+        </form>
+        </div>
+
+
+
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="/author/matt/">Matt Zeunert</a></h4>
+
+                    <p>Read <a href="/author/matt/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">London, UK</span>
+                    <span class="author-link icon-link"><a href="https://twitter.com/mattzeunert">https://twitter.com/mattzeunert</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=What's%20the%20performance%20cost%20of%20a%20function%20call%3F&amp;url=http://localhost:8080performance-cost-javascript-function-call-and-foreach/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8080performance-cost-javascript-function-call-and-foreach/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:8080performance-cost-javascript-function-call-and-foreach/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+-->
+<hr>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'codereadability';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../why-use-a-style-guide/">
+        <section class="post">
+            <h2>Why use a style guide?</h2>
+            <p>Most medium and large software projects have a style guide to ensure different developers write code in a consistent&hellip;</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../magic-numbers/">
+        <section class="post">
+            <h2>Refactoring Magic Numbers</h2>
+            <p>Magic numbers are numbers that appear in your source code without any explanation of what they stand for. Usually,&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../">JavaScript Code Readability</a> &copy; 2019</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64817302-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../assets/js/index.js"></script>
+
+<!--
+    <script>
+
+
+
+      if (window.ga === undefined) {
+        window.ga = function(){
+          console.log("ga blocked")
+        }
+      }
+
+        var $ = jQuery;
+
+
+        if (localStorage.getItem("gaDimension1") === null) {
+            var dimension1 = Math.random() > .5 ? "B" : "A";
+            ga('set', 'dimension1', dimension1);
+            ga('send', 'event', 'Dimension1 Set', dimension1, location.pathname);
+            localStorage.setItem("gaDimension1", dimension1);
+        }
+
+        if (localStorage.getItem("gaDimension1")==="B") {
+          $("body").addClass("newsletter-form-b");
+        }
+
+
+          $("#newsletter-form").submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var form = $(this);
+
+            function updateUi(msg) {
+              $(".mailchimp-message").show().html(msg.replace("0 - ", ""));
+
+            }
+
+            $("#mc-embedded-subscribe").prop("disabled", true);
+            $("#mce-EMAIL").prop("disabled", true);
+
+            var email = $("#mce-EMAIL").val();
+
+            $.ajax({
+                type: "GET",
+                url: "//mostlystatic.us8.list-manage.com/subscribe/post-json?u=6e1d1f58acfc60f4eb4adce31&amp;id=3c7a4d756e&c=?",
+                data: "b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e=&EMAIL=" + encodeURIComponent(email),
+                cache       : false,
+                dataType    : 'json',
+                contentType: "application/json; charset=utf-8",
+                error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+                success     : function(data) {
+                    updateUi(data.msg);
+                    if (data.result != "success") {
+                      $("#mc-embedded-subscribe").prop("disabled", false);
+                        $("#mce-EMAIL").prop("disabled", false);
+                        ga('send', 'event', 'Failed Newsletter Subscribe', location.pathname, email);
+                        ga('set', 'dimension1', dimensionValue);
+                        // Something went wrong, do something to notify the user. maybe alert(data.msg);
+                    } else {
+                        // It worked, carry on...
+                        ga('send', 'event', 'Newsletter Subscribe', location.pathname, email);
+                        $('#newsletter-form label, #newsletter-form p, #newsletter-form input[type="text"], #newsletter-form input[type="submit"]').hide();
+                    }
+                }
+            });
+
+            return false;
+
+          })
+        </script>
+-->
+
+
+</body>
+</html>

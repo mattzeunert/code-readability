@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Writing cleaner code with JavaScript 2015 template strings</title>
+    <meta name="description" content>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400">
+
+    <link rel="canonical" href="http://localhost:8080writing-cleaner-code-with-javascript-2015-template-strings/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:8080writing-cleaner-code-with-javascript-2015-template-strings/amp/">
+    
+    <meta property="og:site_name" content="JavaScript Code Readability">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Writing cleaner code with JavaScript 2015 template strings">
+    <meta property="og:description" content="JavaScript 2015 is the next version of JavaScript. Its official name is ECMAScript 2015 and sometimes it&#x27;s called ES6. This article discusses how you can use JS 2015 today and use the template strings feature to write cleaner and more readable code. If you&#x27;ve used Babel before, skip right to">
+    <meta property="og:url" content="http://localhost:8080writing-cleaner-code-with-javascript-2015-template-strings/">
+    <meta property="article:published_time" content="2015-08-17T10:25:56.000Z">
+    <meta property="article:modified_time" content="2015-08-17T10:38:16.000Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Writing cleaner code with JavaScript 2015 template strings">
+    <meta name="twitter:description" content="JavaScript 2015 is the next version of JavaScript. Its official name is ECMAScript 2015 and sometimes it&#x27;s called ES6. This article discusses how you can use JS 2015 today and use the template strings feature to write cleaner and more readable code. If you&#x27;ve used Babel before, skip right to">
+    <meta name="twitter:url" content="http://localhost:8080writing-cleaner-code-with-javascript-2015-template-strings/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Matt Zeunert">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "JavaScript Code Readability",
+        "logo": "http://localhost:8080ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Matt Zeunert",
+        "url": "http://localhost:8080author/matt/",
+        "sameAs": [
+            "https://twitter.com/mattzeunert"
+        ]
+    },
+    "headline": "Writing cleaner code with JavaScript 2015 template strings",
+    "url": "http://localhost:8080writing-cleaner-code-with-javascript-2015-template-strings/",
+    "datePublished": "2015-08-17T10:25:56.000Z",
+    "dateModified": "2015-08-17T10:38:16.000Z",
+    "description": "JavaScript 2015 is the next version of JavaScript. Its official name is ECMAScript 2015 and sometimes it&#x27;s called ES6. This article discusses how you can use JS 2015 today and use the template strings feature to write cleaner and more readable code. If you&#x27;ve used Babel before, skip right to",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.codereadability.com"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="JavaScript Code Readability" href="http://localhost:8080rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="../">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="../rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<style>
+.pull-quote {
+  float: right;
+  font-size: 28px;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  line-height: 1.2em;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  color: white;
+  background: #3A4145;
+  padding: 20px;
+  text-align: center;
+}
+.pull-quote:before {
+  content: "\201C";
+}
+.pull-quote:after {
+  content: "\201D";
+}
+
+@media only screen and (max-width: 900px) {
+  .pull-quote {
+    width: 100%;
+    max-width: none;
+    font-size: 24px;
+  }
+}
+</style>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Writing cleaner code with JavaScript 2015 template strings</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-08-17">17 August 2015</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>JavaScript 2015 is the next version of JavaScript. Its official name is ECMAScript 2015 and sometimes it's called ES6.</p>
+
+<p>This article discusses how you can use JS 2015 today and use the template strings feature to write cleaner and more readable code.</p>
+
+<p>If you've used Babel before, skip right to reading the "Multiline strings and template variables" section.</p>
+
+<h2 id="usingjs2015todaywithbabel">Using JS 2015 today with Babel</h2>
+
+<p>Currently, no browser has full <a href="https://kangax.github.io/compat-table/es6/">support for JavaScript 2015</a>. Because of that, you need a converter that translates JS 2015 code into traditional JavaScript. In your HTML, you then include the generated file that contains traditional JS code, rather than including the JS 2015 code you wrote.</p>
+
+<p>One tool to convert JS 2015 code into code that works today is <a href="https://babeljs.io/">Babel</a>. There are some JS 2015 features that Babel <a href="https://kangax.github.io/compat-table/es6/">doesn't support</a>. Most of them are related to the Object APIs rather than the language itself. To be safe, stick to the <a href="https://babeljs.io/docs/learn-es2015/">features described on the Babel.js website</a>.</p>
+
+<p>You can <a href="https://babeljs.io/repl/">try Babel online</a> or run it on your computer. For example, there are Grunt and Gulp plugins available on the Babel website.</p>
+
+<p>The easiest way to get started is to install  the Babel command line tool. Run this command to install it using <a href="https://docs.npmjs.com/getting-started/installing-node">npm</a>.</p>
+
+<blockquote>
+  <p>npm install -g babel</p>
+</blockquote>
+
+<p>(Usually needs to run as administrator, add <code>sudo</code> before <code>npm</code> on Mac/Linux.)</p>
+
+<h3 id="exampleconvertingajavascript2015file">Example: Converting a JavaScript 2015 file</h3>
+
+<p>Here's some example JavaScript 2015 code:</p>
+
+<pre><code>var greeting = `Hello`;
+</code></pre>
+
+<p>Note the use of backticks instead of quote signs, which indicates a special type of string in JS 2015. This code will run fine in Chrome or Firefox, but older browsers will show an error message:</p>
+
+<blockquote>
+  <p>SyntaxError: Invalid character: '`'</p>
+</blockquote>
+
+<p>You need to run Babel to convert the code to a JavaScript version that today's browsers support.</p>
+
+<p>If you call your JavaScript file js2015.js you can run this command  to translate the JS 2015 code to traditional JS.</p>
+
+<blockquote>
+  <p>babel js2015.js --out-file traditional.js</p>
+</blockquote>
+
+<p>Now traditional.js contains this code, which is supported by all browsers:</p>
+
+<pre><code>"use strict";
+
+var greeting = "Hello";
+</code></pre>
+
+<p>You can add the <code>watch</code> flag to the Babel command to automatically update the traditional.js file every time you make a change to the JS 2015 code.</p>
+
+<blockquote>
+  <p>babel js2015.js --out-file traditional.js --watch</p>
+</blockquote>
+
+<p>Now let's look at template strings, and why they are a great addition to the language. </p>
+
+<h2 id="multilinestringsandtemplatevariables">Multiline strings and template variables</h2>
+
+<p>The strings above, with the backtick, are called template strings. They have two properties that are useful:</p>
+
+<ol>
+<li>They can span multiple lines  </li>
+<li>They can contain placeholders that are replaced by variable values</li>
+</ol>
+
+<h3 id="multiplelines">Multiple lines</h3>
+
+<p>Multi-line strings are convenient, because you don't need to write the lines separately and then join them together with the new line character <code>\n</code>.</p>
+
+<p>For example, you can write...</p>
+
+<pre><code>console.log(`Hi,
+How are you?`);
+</code></pre>
+
+<p>... instead of concatenating two separate strings:</p>
+
+<pre><code>console.log("Hi,\n"
++ "How are you?");
+</code></pre>
+
+<p>Of course, in this example, you could just use "Hi,\nHow are you" instead of joining the two strings together. But this quickly gets messy when your string is longer than two lines.</p>
+
+<h3 id="variableinterpolation">Variable interpolation</h3>
+
+<p>Template strings also provide a string interpolation syntax that allows you to avoid string concatenation (<code>"Hi " + name + ...</code>).</p>
+
+<p>Instead, you can reference the variables directly from inside the string:</p>
+
+<pre><code>var name = "Terry";
+console.log(`Hello ${name}!`);
+</code></pre>
+
+<p>The <code>${name}</code> syntax also supports more complex expressions inside the placeholder:</p>
+
+<pre><code>var a = 4;
+var b = 8;
+console.log(`${a} + ${b} = ${a + b}`);
+// 4 + 8 = 12;
+</code></pre>
+
+<p>Another example of a more complex placeholder expression would be accessing object properties, for example <code>${Math.PI}</code>.</p>
+
+<h3 id="usingtemplatestringsfortemplates">Using template strings for... templates</h3>
+
+<p>Here's an example that combines the two features introduced above to compose an automated email:</p>
+
+<pre><code>var name = "Brendan";
+var signupUrl = "http://example.com";
+var email = `Hi ${name},
+
+Please sign up for the event here: ${signupUrl}
+
+Thanks,
+The Event Team`;
+</code></pre>
+
+<p>And this is the value of <code>email</code> after running the code above:</p>
+
+<blockquote>
+  <p>Hi Brendan,  </p>
+  
+  <p>Please sign up for the event here: <a href="http://example.com">http://example.com</a>  </p>
+  
+  <p>Thanks, <br>
+  The Event Team</p>
+</blockquote>
+
+<p>You can see why they're called template strings! They make it easy and clean to write templates in JavaScript.</p>
+
+<p>Some example use cases for template strings are generating emails, generating HTML code or just putting multi-line content into a textarea element. </p>
+        </section>
+
+
+<script type="text/javascript">
+amzn_assoc_placement = "adunit0";
+amzn_assoc_search_bar = "false";
+amzn_assoc_tracking_id = "mzrexamples-20";
+amzn_assoc_ad_mode = "manual";
+amzn_assoc_ad_type = "smart";
+amzn_assoc_marketplace = "amazon";
+amzn_assoc_region = "US";
+amzn_assoc_title = "Make your code awesome";
+amzn_assoc_linkid = "52e13d7487501a079692a6290f4b1742";
+amzn_assoc_asins = "0596802293,1449327680,0735619670,0132350882";
+</script>
+<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+
+<!--
+        <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+          #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+          /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+             We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+          #mc_embed_signup form {
+            padding: 0;
+          }
+          #mc_embed_signup input.button {
+            background: #000085;
+          }
+          #mc_embed_signup input.button:hover {
+            background: #000042;
+          }
+          #mc_embed_signup input[type="email"]{
+            border-radius: 5px;
+          }
+
+.mailchimp-message {
+display: none;
+    padding: 10px;
+  background: #fafafa;
+  line-height: 1.5em;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+
+ #newsletter-form p.weekly {
+  display: none;
+ }
+
+
+
+        </style>
+
+        <style>
+.newsletter-form-b #newsletter-form {
+    border: 5px solid #dc3e3b;
+    padding: 40px !important;
+    border-radius: 5px;
+    background-color: #fefbfc;
+}
+
+.newsletter-form-b #newsletter-form label {
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.newsletter-form-b #newsletter-form input[type="text"] {
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"] {
+  height: auto;
+  padding: 10px;
+  background-color: #dc3e3b;
+  font-size: 20px;
+  margin: 0;
+}
+
+.newsletter-form-b #newsletter-form input[type="submit"]:hover {
+  background-color: #961d1b;
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    margin-top: 20px;
+    font-size: 20px;
+    border-color: #aaa;
+    padding: 10px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 700px) {
+  .newsletter-form-b #newsletter-form input[type="submit"],
+  .newsletter-form-b #newsletter-form input[type="text"] {
+    width: 100%;
+  }
+}
+
+.newsletter-form-b #newsletter-form .mailchimp-message {
+    background-color: transparent;
+    border: none;
+    margin-top: 0;
+}
+
+.newsletter-form-b #newsletter-form p.weekly {
+  display: block;
+  margin-bottom: 40px;
+  margin-top: 0px
+}
+        </style>
+
+
+
+
+        <div id="mc_embed_signup">
+        <form id="newsletter-form"  method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" novalidate>
+            <div id="mc_embed_signup_scroll">
+          <label for="mce-EMAIL">Read more code readability articles like this</label>
+          <p class="weekly">Get an email with a new articles once a week.</p>
+          <input type="text" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address" required>
+            
+            <div style="position: absolute; left: -5000px;"><input type="text" name="b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            <div class="mailchimp-message">
+
+            </div>
+        </form>
+        </div>
+
+
+
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="/author/matt/">Matt Zeunert</a></h4>
+
+                    <p>Read <a href="/author/matt/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">London, UK</span>
+                    <span class="author-link icon-link"><a href="https://twitter.com/mattzeunert">https://twitter.com/mattzeunert</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Writing%20cleaner%20code%20with%20JavaScript%202015%20template%20strings&amp;url=http://localhost:8080writing-cleaner-code-with-javascript-2015-template-strings/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8080writing-cleaner-code-with-javascript-2015-template-strings/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:8080writing-cleaner-code-with-javascript-2015-template-strings/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+-->
+<hr>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'codereadability';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../magic-numbers/">
+        <section class="post">
+            <h2>Refactoring Magic Numbers</h2>
+            <p>Magic numbers are numbers that appear in your source code without any explanation of what they stand for. Usually,&hellip;</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../refactoring-if-statements-for-readability/">
+        <section class="post">
+            <h2>Refactoring if statements for readability</h2>
+            <p>How can you make this if statement more readable? if (currentUser !== null) {     displayUserName(); } The condition inside an if statement&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../">JavaScript Code Readability</a> &copy; 2019</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64817302-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../assets/js/index.js"></script>
+
+<!--
+    <script>
+
+
+
+      if (window.ga === undefined) {
+        window.ga = function(){
+          console.log("ga blocked")
+        }
+      }
+
+        var $ = jQuery;
+
+
+        if (localStorage.getItem("gaDimension1") === null) {
+            var dimension1 = Math.random() > .5 ? "B" : "A";
+            ga('set', 'dimension1', dimension1);
+            ga('send', 'event', 'Dimension1 Set', dimension1, location.pathname);
+            localStorage.setItem("gaDimension1", dimension1);
+        }
+
+        if (localStorage.getItem("gaDimension1")==="B") {
+          $("body").addClass("newsletter-form-b");
+        }
+
+
+          $("#newsletter-form").submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var form = $(this);
+
+            function updateUi(msg) {
+              $(".mailchimp-message").show().html(msg.replace("0 - ", ""));
+
+            }
+
+            $("#mc-embedded-subscribe").prop("disabled", true);
+            $("#mce-EMAIL").prop("disabled", true);
+
+            var email = $("#mce-EMAIL").val();
+
+            $.ajax({
+                type: "GET",
+                url: "//mostlystatic.us8.list-manage.com/subscribe/post-json?u=6e1d1f58acfc60f4eb4adce31&amp;id=3c7a4d756e&c=?",
+                data: "b_6e1d1f58acfc60f4eb4adce31_3c7a4d756e=&EMAIL=" + encodeURIComponent(email),
+                cache       : false,
+                dataType    : 'json',
+                contentType: "application/json; charset=utf-8",
+                error       : function(err) { alert("Could not connect to the registration server. Please try again later."); },
+                success     : function(data) {
+                    updateUi(data.msg);
+                    if (data.result != "success") {
+                      $("#mc-embedded-subscribe").prop("disabled", false);
+                        $("#mce-EMAIL").prop("disabled", false);
+                        ga('send', 'event', 'Failed Newsletter Subscribe', location.pathname, email);
+                        ga('set', 'dimension1', dimensionValue);
+                        // Something went wrong, do something to notify the user. maybe alert(data.msg);
+                    } else {
+                        // It worked, carry on...
+                        ga('send', 'event', 'Newsletter Subscribe', location.pathname, email);
+                        $('#newsletter-form label, #newsletter-form p, #newsletter-form input[type="text"], #newsletter-form input[type="submit"]').hide();
+                    }
+                }
+            });
+
+            return false;
+
+          })
+        </script>
+-->
+
+
+</body>
+</html>
